@@ -2,6 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VueLazyImageLoading from 'vue-lazy-image-loading'
+require('@/assets/styles/index.scss')
+
+Vue.use(VueLazyImageLoading)
 
 Vue.config.productionTip = false
 

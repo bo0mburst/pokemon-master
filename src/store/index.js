@@ -16,8 +16,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     pokemonInfo: null,
-    loading: true,
-    activeDataIndex: 0
+    loading: true
   },
 
   mutations: {
@@ -27,10 +26,6 @@ export default new Vuex.Store({
 
     setLoading: (state, payload) => {
       state.loading = payload
-    },
-
-    setActiveDataIndex: (state, payload) => {
-      state.activeDataIndex = payload
     }
   },
 
@@ -38,39 +33,40 @@ export default new Vuex.Store({
     /* eslint-disable camelcase */
     getPokemon: async ({ commit }, payload) => {
       commit('setLoading', true)
-      commit('setActiveDataIndex', 0)
 
       let pokemon = null
       const res = await api.get(`/pokemon-species/${payload}`)
 
       if (res.status === 200) {
         pokemon = {}
-        const { id, name, genera, flavor_text_entries, color, varieties } = res.data
+        const { id, name, names, genera, flavor_text_entries, color, varieties } = res.data
 
         pokemon.id = id
         pokemon.name = name
+        pokemon.jname = names.filter(i => i.language.name === 'ja')[0] || pokemon.name
         pokemon.genera = genera.filter(i => i.language.name === 'en')
         pokemon.description = flavor_text_entries.filter(i => i.language.name === 'en')
         pokemon.color = color.name
         pokemon.varieties = varieties
         pokemon.data = []
-        pokemon.varieties.forEach(async i => {
-          const res = await api.get(`/pokemon/${i.pokemon.name}`)
+        pokemon.defaultImage = `${imageSource}/${pokemon.id}.png`
+
+        for (const variety of pokemon.varieties) {
+          const res = await api.get(`/pokemon/${variety.pokemon.name}`)
           if (res.status === 200) {
-            const { name, height, weight, types, abilities, stats } = res.data
+            let { name, height, weight, types, abilities, stats } = res.data
             let image = pokemon.id + (name.replace(pokemon.name, ''))
             image = `${imageSource}/${image}.png`
+            weight = `${(Number(weight) / 10).toFixed(2)} kg`
+            height = `${(Number(height) * 10).toFixed(2)} cm`
+            stats.reverse()
             pokemon.data.push({ name, height, weight, types, abilities, stats, image })
           }
-        })
+        }
       }
 
       commit('setPokemonInfo', pokemon)
       commit('setLoading', false)
-    },
-
-    setActiveDataIndex: ({ commit }, payload) => {
-      commit('setActiveDataIndex', payload)
     }
   }
 })

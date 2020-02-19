@@ -3,20 +3,33 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  // border: 1px solid #aaa;
 }
 
 html, body {
   height: 100%;
   width: 100%;
   font-family: 'Montserrat', sans-serif;
-}
+  color: #777;
+  user-select: none;
+  line-height: 1.5rem;
 
-h1 {
-  font-size: 4rem;
+  @media only screen and (max-width: 750px) {
+    font-size: 0.9rem;
+  }
 }
 
 button {
   cursor: pointer;
+}
+
+// .container  {
+//   max-width: 1033px;
+//   margin: 0 auto;
+// }
+
+p, h1, h2, h3 {
+  text-transform: capitalize;
 }
 
 .bug {

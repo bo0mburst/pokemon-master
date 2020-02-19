@@ -3,32 +3,67 @@
     class="pokemon-info"
   >
     <div
-      class="info-wrapper"
-      v-if="!loading"
+      class="container flex-center"
+      v-if="!loading && info"
     >
-      <div v-if="info">
-        <div
-          v-for="(data, index) in info.data"
-          :key="index"
-          v-show="index === active"
-        >
-          <h1 :style="`color: ${info.color}`">{{ data.name }}</h1>
+      <div
+        class="info-wrapper"
+        v-for="(data, index) in info.data"
+        :key="index"
+        v-show="index === activeData"
+      >
 
-          <div class="info">
+        <p class="large-name" :style="`color: ${info.color}`">
+          {{ info.jname.name || info.name }}
+        </p>
+
+        <h1>
+          {{ info.name }}
+        </h1>
+
+        <div class="info flex-center">
+
+          <div class="display-image-wrapper">
             <lazy-img
               class="display-image"
               :src="data.image"
-              :fallback="info.data[0].image"
+              :fallback="info.defaultImage"
             />
+          </div>
 
-            <table>
+          <div class="details">
+            <div class="toggle">
+              <button @click="isStats = false" :class="{'active' : !isStats}">
+                About
+              </button>
+              <button @click="isStats = true" :class="{'active' : isStats}">
+                Base Stats
+              </button>
+            </div>
+
+            <table v-if="isStats">
+              <tr v-for="({stat, base_stat}, index) in data.stats" :key="index">
+                <td>
+                  <p>
+                    {{ stat.name }}
+                  </p>
+                </td>
+                <td>
+                  <p class="stat" :style="`width: ${base_stat}px;`">
+                    {{ base_stat }}
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <table v-if="!isStats">
               <tr>
                 <td>
                   Number:
                 </td>
 
                 <td>
-                  {{ info.id }}
+                  {{ `#${String(info.id).padStart(3, '0')}` }}
                 </td>
               </tr>
 
@@ -38,12 +73,14 @@
                 </td>
 
                 <td>
-                  <span
-                    v-for="({type}, index) in data.types"
-                    :key="index"
-                  >
-                    {{ type.name }}
-                  </span>
+                  <p>
+                    <span
+                      v-for="({type}, index) in data.types"
+                      :key="index"
+                    >
+                      {{ type.name }}
+                    </span>
+                  </p>
                 </td>
               </tr>
 
@@ -53,12 +90,14 @@
                 </td>
 
                 <td>
-                  <span
-                    v-for="({ability, is_hidden}, index) in data.abilities"
-                    :key="index"
-                  >
-                    {{ ability.name }}
-                  </span>
+                  <p>
+                    <span
+                      v-for="({ability, is_hidden}, index) in data.abilities"
+                      :key="index"
+                    >
+                      {{ ability.name }}
+                    </span>
+                  </p>
                 </td>
               </tr>
 
@@ -81,36 +120,35 @@
                   {{ data.weight }}
                 </td>
               </tr>
-
-              <tr>
-                <td>
-                  Description
-                </td>
-
-                <td>
-                  <!-- <p
-                    v-for="({ flavor_text },index) in info.description"
-                    :key="index"
-                  >
-                    {{ flavor_text }}
-                  </p> -->
-                  <p>{{ info.description[0].flavor_text }}</p>
-                </td>
-              </tr>
             </table>
-          </div>
-        </div>
 
-        <ul>
-          <li
-            v-for="(data, index) in info.data"
-            :key="index"
-          >
-            <button @click="changeActiveData(index)">
-              {{ data.name }}
-            </button>
-          </li>
-        </ul>
+            <div class="description" v-if="!isStats">
+              <h4>
+                Dex Entry:
+              </h4>
+
+              <p>
+                {{ info.description[0].flavor_text }}
+              </p>
+            </div>
+          </div>
+
+          <ul class="forms" v-if="info.data.length > 1">
+            <li
+              v-for="(data, index) in info.data"
+              :key="index"
+            >
+              <button
+                :class="{'active' : index === activeData}"
+                @click="changeActiveData(index)"
+              >
+                <p>
+                  {{ data.name }}
+                </p>
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <div v-else>
@@ -123,17 +161,30 @@
 import { mapState } from 'vuex'
 
 export default {
+  data () {
+    return {
+      activeData: 0,
+      isStats: true
+    }
+  },
+
   methods: {
     changeActiveData (index) {
-      this.$store.dispatch('setActiveDataIndex', index)
+      this.activeData = index
+    }
+  },
+
+  watch: {
+    info () {
+      this.activeData = 0
+      this.isStats = false
     }
   },
 
   computed: {
     ...mapState({
       loading: 'loading',
-      info: 'pokemonInfo',
-      active: 'activeDataIndex'
+      info: 'pokemonInfo'
     })
   }
 }
@@ -142,48 +193,145 @@ export default {
 <style lang="scss" scoped>
   .pokemon-info {
     height: 100%;
-    width: 100%;
-    // background-size: 200% 200%;
-    // animation: gradient 10s ease infinite;
     background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
-    text-transform: capitalize;
     overflow-x: hidden;
     overflow-y: auto;
 
-    .info-wrapper  {
-      flex: 1 1 auto;
-      max-width: 1033px;
-      // border: 1px solid #eee;
+    .container {
+      height: 100%;
+      padding: 20px;
     }
 
-    .info {
-      height: auto;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      // box-shadow: 0 5px 10px #aaa;
+    .info-wrapper {
+      position: relative;
+      margin: 80px 0;
 
-      .display-image {
-        width: 90vmax;
-        margin: 10px;
+      .large-name {
+        opacity: 0.20;
+        margin-bottom: 30px;
+        font-size: 3rem;
+        position: absolute;
+        font-weight: 600;
+        top: 20px;
+        left: 30px;
+        pointer-events: none;
       }
 
-      table {
-        border-collapse: collapse;
-        table-layout: fixed;
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
 
-        tr {
-          td {
-            padding: 10px;
-            vertical-align: top;
+      .info {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
 
-            &:first-child {
-              color: #555;
+        .display-image-wrapper {
+          width: 80%;
+          margin: 20px;
+          pointer-events: none;
+        }
+
+        .details {
+          position: relative;
+          width: 100%;
+
+          .toggle {
+            display: flex;
+            margin-bottom: 20px;
+
+            button {
+              flex: 1 1 auto;
+              background-color: #fff;
+              border: 1px solid #ccc;
+              padding: 5px;
+              transition: 0.3s;
+
+              &:hover, &.active {
+                background-color: #777;
+                border-color: #777;
+                color: #fff;
+              }
             }
+          }
+
+          table {
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            table-layout: fixed;
+
+            tr {
+              td {
+                padding: 3px;
+                vertical-align: top;
+
+                &:first-child {
+                  font-weight: 600;
+                  padding-right: 20px;
+                }
+
+                .stat {
+                  background-color: #bbddc7;
+                  text-align: right;
+                  padding: 2px 5px;
+                  border-radius: 10px;
+                  color: #fff;
+                }
+              }
+            }
+          }
+
+          .description {
+            padding: 5px;
+            margin-bottom: 20px;
+
+            h4 {
+              margin: 5px 0;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 750px) {
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      .info-wrapper {
+        width: 100vmin;
+        margin: 0;
+        padding: 50px;
+
+        h1 {
+          font-size: 4rem;
+          margin-bottom: 50px;
+        }
+
+        .large-name {
+          font-size: 15vmin;
+          top: 100px;
+          left: 100px;
+        }
+
+        .info {
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          .display-image-wrapper {
+            width: 50%;
+            margin: 20px;
+          }
+
+          .details {
+            flex: 1 1 300px;
           }
         }
       }

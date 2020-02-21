@@ -1,3 +1,4 @@
+// variables
 $bug: #a8b820;
 $dark: #705848;
 $dragon: #7038f8;
@@ -16,3 +17,22 @@ $psychic: #f85888;
 $rock: #b8a038;
 $steel: #b8b8d0;
 $water: #6890f0;
+
+// animations
+@keyframes fade-to-right {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// mixins
+
+@mixin for-desktop {
+  @media (min-width: 700px) { @content; }
+}

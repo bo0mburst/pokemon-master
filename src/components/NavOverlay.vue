@@ -96,7 +96,7 @@ export default {
 
   nav {
     background-color: #eee;
-    box-shadow: 0 3px 6px #888;
+    box-shadow: 0 3px 6px #bbb;
     position: relative;
     flex: 1 1 auto;
 
@@ -104,16 +104,11 @@ export default {
         content:'';
         display: inline-block;
         position: absolute;
-        width: 40vw;
         height: 50px;
-        min-width: 300px;
-        max-width: 500px;
+        width: 100%;
         background-color: #eee;
-        transform: skew(45deg);
         border: none;
-        bottom: -49px;
-        right: -70px;
-        box-shadow: -3px 3px 2px #888;
+        box-shadow: -3px 3px 2px #bbb;
     }
 
     &:last-child {
@@ -127,11 +122,6 @@ export default {
     transition: 0.5s;
     z-index: -1;
     height: 98vh;
-
-    // &:hover {
-    //     height: 90vh;
-    //     background-color: transparent;
-    // }
   }
 
   button {
@@ -156,43 +146,35 @@ export default {
 
   .controls {
     position: absolute;
-    bottom: -45px;
-    right: 25px;
-    width: 28vw;
     height: 50px;
-    max-width: 380px;
-    min-width: 190px;
+    width: 100%;
+    padding: 0 30px;
     display: flex;
     align-items: center;
     pointer-events: all;
 
     .search-wrapper {
       flex: 1 1 auto;
-      box-shadow: -5px 5px 5px #888;
+      box-shadow: inset -1px 1px 2px #aaa;
       transform: skew(45deg);
-      overflow: hidden;
       background-color: #fff;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      padding: 2px 20px;
 
       .search {
+        flex: 1 1 auto;
         display: flex;
-        padding: 2px;
-        width: 85%;
-        height: 35px;
+        // padding: 2px;
         transform: skew(-45deg);
 
         input {
           display: block;
           width: 100%;
-          padding: 5px;
-          margin: 5px 10px;
-          border: none;
-          background-color: transparent;
-          border-bottom: 1px solid #ddd;
-          color: #333;
+          margin: 5px;
           text-transform: uppercase;
+          background-color: transparent;
+          border: none;
+          border-bottom: 1px solid #ddd;
         }
       }
     }
@@ -213,6 +195,31 @@ export default {
         }
       }
     }
+  }
+}
+
+@include for-desktop {
+  nav {
+    &:before {
+      width: 40vw;
+      height: 50px;
+      min-width: 300px;
+      max-width: 500px;
+      transform: skew(45deg);
+      bottom: -49px;
+      right: -70px;
+    }
+
+    &:last-child {
+      transform: scale(-1);
+    }
+  }
+
+  .controls {
+    bottom: -45px;
+    right: 0;
+    max-width: 430px;
+    min-width: 190px;
   }
 }
 </style>

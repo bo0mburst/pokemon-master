@@ -12,24 +12,18 @@ html, body {
   font-family: 'Montserrat', sans-serif;
   color: #777;
   user-select: none;
-  line-height: 1.5rem;
-
-  @media only screen and (max-width: 750px) {
-    font-size: 0.9rem;
-  }
 }
 
-button {
+a, button {
   cursor: pointer;
 }
 
-// .container  {
-//   max-width: 1033px;
-//   margin: 0 auto;
-// }
-
-p, h1, h2, h3 {
+a, p, h1, h2, h3 {
   text-transform: capitalize;
+}
+
+p {
+  line-height: 1.8rem;
 }
 
 .bug {

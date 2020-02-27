@@ -148,6 +148,7 @@ export default {
             width: 100%;
             flex: 1 1 auto;
             padding: 0 10px;
+            text-transform: uppercase;
           }
 
           .icon {

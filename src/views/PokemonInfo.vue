@@ -129,12 +129,7 @@
 
               <td>
                 <p>
-                  <span
-                    v-for="({ability, is_hidden}, index) in data.abilities"
-                    :key="index"
-                  >
-                    {{ ability.name }}
-                  </span>
+                  {{ data.abilities }}
                 </p>
               </td>
             </tr>
@@ -176,10 +171,9 @@
                   {{ stat.name }}
                 </p>
               </td>
-              <td>
-                <p class="stat" :style="`width: ${base_stat}px;`">
-                  {{ base_stat }}
-                </p>
+              <td class="stat">
+                {{ base_stat }}
+                <p :style="`width: ${base_stat}px;`"></p>
               </td>
             </tr>
           </table>
@@ -249,7 +243,7 @@ export default {
     info () {
       this.activeData = 0
       this.activeDetail = 0
-      this.activeEntry = 0
+      this.activeEntry = 1
     }
   },
 
@@ -342,7 +336,8 @@ export default {
         }
 
         .detail {
-          margin-bottom: 20px;
+          padding: 20px 0;
+          border-top: 1px solid #ccc;
 
           h4 {
             margin-bottom: 10px;
@@ -354,14 +349,21 @@ export default {
             td:first-child {
               padding-right: 20px;
             }
-          }
 
-          p.stat {
-            background-color: #bbddc7;
-            color: #fff;
-            text-align: right;
-            padding: 1px 5px;
-            border-radius: 10px;
+            .stat {
+              display: flex;
+              align-items: center;
+              color: #a1ddb6;
+
+              p {
+                display: inline-block;
+                margin-left: 10px;
+                background-color: #a1ddb6;
+                text-align: right;
+                padding: 10px;
+                border-radius: 10px;
+              }
+            }
           }
 
           .entry-nav {
@@ -481,11 +483,9 @@ export default {
               display: block;
               opacity: 0;
               margin-left: 50px;
-              // padding: 20px 10px 20px 30px;
-              // border-width: 5px 5px 5px 0;
-              // border-style: double;
-              // border-color: #ccc;
               animation: fade-to-right 1s forwards;
+              padding: 0;
+              border: 0;
             }
 
             table {

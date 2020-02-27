@@ -72,12 +72,13 @@ export default {
   width: 100%;
 
   ul {
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     list-style: none;
     height: 100%;
     position: relative;
 
-    li {
+    li, &:after {
       position: absolute;
       top: 0;
       left: 0;
@@ -85,7 +86,10 @@ export default {
       bottom: 0;
       width: 100%;
       height: 100%;
-      background-size: cover;
+    }
+
+    li {
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       opacity: 0;
@@ -95,6 +99,18 @@ export default {
         opacity: 1;
       }
     }
+
+    &:after {
+      content: '';
+      display: block;
+      background-color: rgba(0,0,0,0.5);
+    }
+  }
+}
+
+@include for-desktop {
+  .home ul li {
+    background-size: cover;
   }
 }
 </style>

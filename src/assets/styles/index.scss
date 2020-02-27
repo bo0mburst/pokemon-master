@@ -3,19 +3,28 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
-  // border: 1px solid #aaa;
+  color: #777;
 }
 
 html, body {
   height: 100%;
   width: 100%;
   font-family: 'Montserrat', sans-serif;
-  color: #777;
   user-select: none;
+  font-size: .85rem;
+
+  @include for-desktop {
+    font-size: 1rem;
+  }
 }
 
 a, button {
   cursor: pointer;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }
 
 a, p, h1, h2, h3 {
@@ -24,6 +33,10 @@ a, p, h1, h2, h3 {
 
 p {
   line-height: 1.8rem;
+}
+
+ul {
+  list-style: none;
 }
 
 .bug {

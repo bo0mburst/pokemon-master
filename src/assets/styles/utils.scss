@@ -31,8 +31,16 @@ $water: #6890f0;
   }
 }
 
-// mixins
+//transition
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease-in-out;
+}
 
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+// mixins
 @mixin for-desktop {
   @media (min-width: 700px) { @content; }
 }

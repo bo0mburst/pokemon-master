@@ -9,19 +9,24 @@ const api = setup({
   }
 })
 
-const imageSource = 'https://pokeres.bastionbot.org/images/pokemon'
+const imageSource = 'https://raw.github.com/billysillano/pokemon-assets/master/images'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    pokemonList: [],
     pokemonInfo: null,
-    loading: true
+    loading: false
   },
 
   mutations: {
     setPokemonInfo: (state, payload) => {
       state.pokemonInfo = payload
+    },
+
+    setPokemonList: (state, payload) => {
+      state.pokemonList = [...state.pokemonList, ...payload]
     },
 
     setLoading: (state, payload) => {
@@ -38,7 +43,7 @@ export default new Vuex.Store({
       try {
         const res = await api.get(`/pokemon-species/${payload}`)
 
-        if (res.status === 200) {
+        if (res.status === 200 && res.data) {
           pokemon = {}
           const { id, name, names, genera, flavor_text_entries, color, varieties } = res.data
 
@@ -61,22 +66,54 @@ export default new Vuex.Store({
           for (const variety of pokemon.varieties) {
             const res = await api.get(`/pokemon/${variety.pokemon.name}`)
             if (res.status === 200) {
-              let { name, height, weight, types, abilities, stats } = res.data
-              let image = pokemon.id + (name.replace(pokemon.name, ''))
-              image = `${imageSource}/${image}.png`
+              let { name, height, weight, types, abilities, stats, forms } = res.data
+
+              const images = []
+
+              if (pokemon.id === 493) { // for arceus
+                images.push(`${imageSource}/${pokemon.id}.png`)
+              } else {
+                for (const form of forms) {
+                  let image = pokemon.id + (form.name.replace(pokemon.name, ''))
+                  image = `${imageSource}/${image}.png`
+                  images.push(image)
+                }
+              }
+
               weight = `${(Number(weight) / 10).toFixed(2)} kg`
               height = `${(Number(height) * 10).toFixed(2)} cm`
               stats.reverse()
-              pokemon.data.push({ name, height, weight, types, abilities, stats, image })
+              pokemon.data.push({ name, height, weight, types, abilities, stats, images })
             }
           }
         }
-      } catch {
-        console.error('Pokemon Not Found.')
+      } catch (e) {
+        console.error('Pokemon Not Found.', e)
+      } finally {
+        commit('setPokemonInfo', pokemon)
+        commit('setLoading', false)
       }
+    },
 
-      commit('setPokemonInfo', pokemon)
-      commit('setLoading', false)
+    getPokemonList: async ({ commit, state }) => {
+      if (state.pokemonList.length >= 807) return
+
+      commit('setLoading', true)
+      try {
+        const offset = state.pokemonList.length
+        const res = await api.get(`/pokemon-species/?offset=${offset}&limit=${30}`)
+        if (res.status === 200 && res.data && res.data.results) {
+          const list = res.data.results.map((i, index) => {
+            i.image = `${imageSource}/${offset + index + 1}.png`
+            return i
+          })
+          commit('setPokemonList', list)
+        }
+      } catch {
+        console.error('Failed to load pokemon list.')
+      } finally {
+        commit('setLoading', false)
+      }
     }
   }
 })

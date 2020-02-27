@@ -1,9 +1,9 @@
 <template>
   <div class="nav-overlay">
     <nav>
-      <div class="controls">
-        <div class="search-wrapper">
-          <div class="search">
+      <div class="trapezoid">
+        <div class="control-wrapper">
+          <div class="control search">
             <input
               type="text"
               placeholder="..."
@@ -24,37 +24,38 @@
     </nav>
     <div class="screen"></div>
     <nav>
-      <ul class="controls">
-        <li>
-          <button>
-            <img
-              src="@/assets/img/ic_bulbasaur.svg"
-              title="pokedex"
-              class="icon"
-            >
-          </button>
-        </li>
+      <div class="trapezoid">
+        <div class="control-wrapper">
+          <ul class="control">
+            <li>
+              <router-link
+                to="/"
+                class="nav-link"
+              >
+                Home
+              </router-link>
+            </li>
 
-        <li>
-          <button>
-            <img
-              src="@/assets/img/ic_charmander.svg"
-              title="Team Draft"
-              class="icon"
-            >
-          </button>
-        </li>
+            <li>
+              <router-link
+                to="/pokemon-list"
+                class="nav-link"
+              >
+                List
+              </router-link>
+            </li>
 
-        <li>
-          <button>
-            <img
-              src="@/assets/img/ic_squirtle.svg"
-              title="play"
-              class="icon"
-            >
-          </button>
-        </li>
-      </ul>
+            <li>
+              <router-link
+                to="/pokemon-team"
+                class="nav-link"
+              >
+                Team
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </div>
 </template>
@@ -95,131 +96,115 @@ export default {
     pointer-events: none;
 
   nav {
-    background-color: #eee;
-    box-shadow: 0 3px 6px #bbb;
+    background-color: #f85353;
+    box-shadow: 0 1px 2px #333;
     position: relative;
     flex: 1 1 auto;
 
-    &:before {
-        content:'';
-        display: inline-block;
-        position: absolute;
-        height: 50px;
-        width: 100%;
-        background-color: #eee;
-        border: none;
-        box-shadow: -3px 3px 2px #bbb;
+    .trapezoid {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
-    &:last-child {
-        transform: scale(-1);
+    .trapezoid {
+      height: 0;
+      width: 90%;
+      border-style: solid;
+      border-width: 50px;
+      border-color: #f85353 transparent transparent transparent;
+
+      .control-wrapper {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 50px;
+        pointer-events: all;
+        box-shadow: 0px 5px 3px -3px #333;
+
+        .control {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .search {
+          flex: 1 1 auto;
+          border-radius: 20px;
+          background-color: #fff;
+          overflow: hidden;
+          padding: 1px 3px;
+
+          input, button {
+            border: 0;
+            background-color: #fff;
+          }
+
+          input {
+            width: 100%;
+            flex: 1 1 auto;
+            padding: 0 10px;
+          }
+
+          .icon {
+            width: 25px;
+          }
+        }
+
+        .nav-link {
+          display: inline-block;
+          border: none;
+          background-color: #f85353;
+          color: #fff;
+          text-align: center;
+          text-decoration: none;
+          font-weight: 600;
+          padding: 5px 10px;
+          border: none;
+          border-radius: 10px;
+          margin: 0 5px;
+          width: 60px;
+          transition: 0.3s;
+
+          &:hover, &.router-link-exact-active {
+            background-color: #fff;
+            color: #f85353;
+          }
+        }
+      }
+    }
+
+    &:last-child, &:last-child .control {
+      transform: scale(-1);
     }
   }
 
   .screen {
     width: 100vw;
+    height: 98vh;
     position: relative;
     transition: 0.5s;
     z-index: -1;
-    height: 98vh;
-  }
-
-  button {
-    border: none;
-    background: none;
-    border-radius: 50%;
-    transition: 0.3s;
-
-    .icon {
-      border-radius: 50%;
-      width: 30px;
-      box-shadow: 0 5px 10px #888;
-      transition: 0.3s;
-    }
-
-    &:hover {
-      .icon {
-        box-shadow: 0 5px 3px #aaa;
-      }
-    }
-  }
-
-  .controls {
-    position: absolute;
-    height: 50px;
-    width: 100%;
-    padding: 0 30px;
-    display: flex;
-    align-items: center;
-    pointer-events: all;
-
-    .search-wrapper {
-      flex: 1 1 auto;
-      box-shadow: inset -1px 1px 2px #aaa;
-      transform: skew(45deg);
-      background-color: #fff;
-      display: flex;
-      padding: 2px 20px;
-
-      .search {
-        flex: 1 1 auto;
-        display: flex;
-        // padding: 2px;
-        transform: skew(-45deg);
-
-        input {
-          display: block;
-          width: 100%;
-          margin: 5px;
-          text-transform: uppercase;
-          background-color: transparent;
-          border: none;
-          border-bottom: 1px solid #ddd;
-        }
-      }
-    }
-  }
-
-  ul.controls {
-    transform: scale(-1);
-    list-style: none;
-    display: flex;
-    justify-content: space-evenly;
-
-    li {
-      button {
-        margin: 0 10px;
-
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
-    }
   }
 }
 
 @include for-desktop {
-  nav {
-    &:before {
-      width: 40vw;
-      height: 50px;
-      min-width: 300px;
-      max-width: 500px;
-      transform: skew(45deg);
-      bottom: -49px;
-      right: -70px;
-    }
+  .nav-overlay {
+    nav {
+      .trapezoid {
+        max-width: 500px;
 
-    &:last-child {
-      transform: scale(-1);
+        .control-wrapper {
+          .nav-link {
+            width: 100px;
+          }
+        }
+      }
     }
-  }
-
-  .controls {
-    bottom: -45px;
-    right: 0;
-    max-width: 430px;
-    min-width: 190px;
   }
 }
 </style>

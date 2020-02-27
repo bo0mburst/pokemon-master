@@ -2,7 +2,9 @@
   <div id="app">
     <nav-overlay></nav-overlay>
     <main>
-      <router-view/>
+      <transition name="fade">
+        <router-view/>
+      </transition>
     </main>
   </div>
 </template>
@@ -19,17 +21,18 @@ export default {
 
 <style lang="scss">
 #app {
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: #fff;
   position: relative;
+  overflow: hidden;
 }
 
 main {
   height: 100vh;
+  overflow-y: auto;
 }
 
 </style>

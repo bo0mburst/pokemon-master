@@ -1,7 +1,7 @@
 <template>
   <div class="pokemon-info">
-    <div v-if="loading">
-      <fetch-loading></fetch-loading>
+    <div class="empty" v-if="loading">
+      <loading-indicator></loading-indicator>
     </div>
 
     <div
@@ -44,7 +44,10 @@
       >
         <div class="display-image">
           <lazy-img
-            :src="data.image"
+            v-for="(img, index) in data.images"
+            :key="index"
+            :src="img"
+            :aspect-ratio="1"
             :fallback="info.defaultImage"
           />
         </div>
@@ -61,19 +64,25 @@
             {{ info.description[activeEntry] }}
           </p>
 
-          <ul class="entry-nav">
-            <li
-              v-for="(entry, index) in info.description"
-              :key="index"
+          <div class="entry-nav">
+            <button
+              @click="changeActiveEntry(-1)"
+              :disabled="activeEntry === 0"
             >
-              <span
-                :class="{ 'active' : index === activeEntry }"
-                @click="changeActiveEntry(index)"
-              >
-                {{ index + 1 }}
-              </span>
-            </li>
-          </ul>
+              prev
+            </button>
+
+            <span>
+              {{`${activeEntry} of ${info.description.length}`}}
+            </span>
+
+            <button
+              @click="changeActiveEntry(1)"
+              :disabled="activeEntry === info.description.length - 1"
+            >
+              next
+            </button>
+          </div>
         </div>
 
         <div
@@ -201,7 +210,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import FetchLoading from '@/components/FetchLoading.vue'
+import LoadingIndicator from '@/components/LoadingIndicator.vue'
 
 export default {
   data () {
@@ -222,8 +231,12 @@ export default {
       this.activeDetail = index
     },
 
-    changeActiveEntry (index) {
-      this.activeEntry = index
+    changeActiveEntry (val) {
+      this.activeEntry = Math.min(this.info.description.length - 1, Math.max(0, this.activeEntry + val))
+    },
+
+    error (e) {
+      console.log(e)
     }
   },
 
@@ -243,7 +256,7 @@ export default {
   },
 
   components: {
-    FetchLoading
+    LoadingIndicator
   }
 }
 
@@ -254,7 +267,7 @@ export default {
     background-color: #fff;
 
     .info {
-      height: 100%;
+      min-height: 100%;
       max-width: 500px;
       margin: 0 auto;
       padding: 100px 20px;
@@ -267,8 +280,9 @@ export default {
           opacity: 0.2;
           font-size: 2rem;
           position: absolute;
-          top: 160px;
+          top: 150px;
           right: 30px;
+          pointer-events: none;
         }
       }
 
@@ -303,11 +317,22 @@ export default {
       .details {
         .display-image {
           margin: 30px 0;
-          max-width: 400px;
+          width: 100%;
+          max-width: 300px;
           display: flex;
-          align-items: center;
           justify-content: center;
           position: relative;
+          flex-wrap: wrap;
+
+          .lazy-image {
+            flex-basis: 100px;
+            margin-bottom: 10px;
+
+            &:only-child {
+              flex: 1 1 auto;
+              margin-bottom: 0;
+            }
+          }
         }
 
         .detail {
@@ -334,28 +359,25 @@ export default {
           }
 
           .entry-nav {
-            li {
-              margin-right: 10px;
-              margin-bottom: 10px;
+            display: flex;
+            font-size: 0.8rem;
+            margin-top: 10px;
 
-              span {
-                display: inline-block;
-                border-radius: 50%;
-                height: 1.5rem;
-                width: 1.5rem;
-                font-size: 1rem;
+            span {
+              margin: 0 10px;
+            }
+
+            button {
+              border: none;
+              padding: 0 5px;
+              border: 1px solid #777;
+              border-radius: 5px;
+              background-color: #fff;
+              transition: 0.3s;
+
+              &:hover {
                 color: #fff;
-                background-color: #555;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0.3;
-                transition: 0.5s;
-                cursor: pointer;
-
-                &.active {
-                  opacity: 1;
-                }
+                background-color: #aaa;
               }
             }
           }
@@ -364,7 +386,7 @@ export default {
     }
 
     .empty {
-      height: 100vh;
+      height: 100%;
       width: 100vw;
       display: flex;
       flex-direction: column;
@@ -391,11 +413,7 @@ export default {
   @include for-desktop {
     .pokemon-info {
       .info {
-        height: 100vh;
         max-width: 100vmin;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
 
         header {
           h1 {
@@ -405,6 +423,7 @@ export default {
 
           .large-name {
             font-size: 5rem;
+            top: 100px;
           }
         }
 
@@ -422,6 +441,7 @@ export default {
         }
 
         .details {
+          flex: 1 1 auto;
           display: flex;
           align-items: center;
           flex-wrap: wrap;
@@ -429,10 +449,21 @@ export default {
           line-height: 1.5rem;
 
           .display-image {
-            flex-shrink: 0;
-            width: 60%;
-            max-width: 60%;
-            margin-right: 30px;
+            flex: 1 1 400px;
+            max-width: 500px;
+
+            .lazy-image {
+              flex-basis: 200px;
+              width: 200px;
+              margin-bottom: 10px;
+
+              &:only-child {
+                flex: 1 1 auto;
+                width: 100%;
+                height: 100%;
+                margin-bottom: 0;
+              }
+            }
           }
 
           .detail {
@@ -442,10 +473,11 @@ export default {
               flex: 1 1 300px;
               display: block;
               opacity: 0;
-              padding: 20px 10px 20px 30px;
-              border-width: 5px 5px 5px 0;
-              border-style: double;
-              border-color: #ccc;
+              margin-left: 50px;
+              // padding: 20px 10px 20px 30px;
+              // border-width: 5px 5px 5px 0;
+              // border-style: double;
+              // border-color: #ccc;
               animation: fade-to-right 1s forwards;
             }
 

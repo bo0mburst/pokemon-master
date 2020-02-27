@@ -10,10 +10,17 @@ const routes = [
     name: 'Home',
     component: Home
   },
+
   {
     path: '/pokemon-info',
     name: 'Pokemon Info',
     component: () => import(/* webpackChunkName: "about" */ '../views/PokemonInfo.vue')
+  },
+
+  {
+    path: '/pokemon-list',
+    name: 'Pokemon List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
   }
 ]
 

@@ -263,7 +263,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .pokemon-info {
-    min-height: 100%;
+    height: 100%;
+    overflow-y: auto;
     background-color: #fff;
 
     .info {

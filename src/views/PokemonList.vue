@@ -76,11 +76,15 @@ export default {
 
 <style lang="scss" scoped>
 .pokemon-list {
-  min-height: 100%;
+  height: 100%;
   padding: 80px 0;
   background-image: linear-gradient(to bottom right, #6d459b, #2aace0, #55a878);
+  overflow-y: auto;
 
   ul {
+    max-width: 80vw;
+    min-width: 320px;
+    margin: 0 auto;
     padding: 0 10px;
 
     li {
@@ -91,15 +95,16 @@ export default {
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 5px 20px;
+      font-size: 1.2rem;
 
       .display-image {
         cursor: pointer;
         min-width: 60px;
-        margin-right: 20px;
+        margin-right: 15px;
       }
 
       p {
-        margin-right: 20px;
+        margin-right: 15px;
       }
     }
   }
@@ -141,16 +146,18 @@ export default {
     ul {
       display: flex;
       flex-wrap: wrap;
-      max-width: 80vw;
+      min-width: 720px;
+      padding: 0;
       margin: 0 auto;
 
       li {
+        flex-basis: 15%;
         width: 15%;
-        max-width: 150px;
         padding: 10px;
-        margin: 5px;
+        margin: .8%;
         flex-direction: column;
         justify-content: center;
+        font-size: 0.9rem;
 
         .display-image {
           width: 100%;

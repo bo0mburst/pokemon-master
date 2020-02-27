@@ -69,7 +69,7 @@
               @click="changeActiveEntry(-1)"
               :disabled="activeEntry === 1"
             >
-              prev
+              《
             </button>
 
             <span>
@@ -80,7 +80,7 @@
               @click="changeActiveEntry(1)"
               :disabled="activeEntry === info.description.length"
             >
-              next
+              》
             </button>
           </div>
         </div>
@@ -124,12 +124,26 @@
 
             <tr>
               <td>
+                Category:
+              </td>
+
+              <td>
+                <p>
+                  {{ info.genera.genus }}
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
                 Abilities:
               </td>
 
               <td>
                 <p>
-                  {{ data.abilities }}
+                  <span>
+                    {{ data.abilities }}
+                  </span>
                 </p>
               </td>
             </tr>
@@ -168,7 +182,9 @@
             <tr v-for="({stat, base_stat}, index) in data.stats" :key="index">
               <td>
                 <p>
-                  {{ stat.name }}
+                  <span>
+                    {{ stat.name }}
+                  </span>
                 </p>
               </td>
               <td class="stat">
@@ -196,7 +212,17 @@
     </div>
 
     <div class="empty" v-else>
-      <h1>Oops looks like this pokemon have not yet been seen!</h1>
+      <div class="images">
+        <img src="@/assets/img/ic_pikachu.svg">
+        <img src="@/assets/img/ic_bulbasaur.svg">
+        <img src="@/assets/img/ic_charmander.svg">
+        <img src="@/assets/img/ic_squirtle.svg">
+      </div>
+
+      <p>
+        Oops looks like this pokemon have not yet been seen!
+      </p>
+
       <router-link
         to="/pokemon-list"
         class="router-link "
@@ -368,25 +394,20 @@ export default {
 
           .entry-nav {
             display: flex;
-            font-size: 0.8rem;
-            margin-top: 10px;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 5px;
+            position: relative;
 
             span {
+              display: inline-block;
               margin: 0 10px;
             }
 
             button {
               border: none;
-              padding: 0 5px;
-              border: 1px solid #777;
-              border-radius: 5px;
-              background-color: #fff;
+              background: none;
               transition: 0.3s;
-
-              &:hover {
-                color: #fff;
-                background-color: #aaa;
-              }
             }
           }
         }
@@ -395,15 +416,62 @@ export default {
 
     .empty {
       height: 100%;
-      width: 100vw;
+      width: 100%;
+      padding: 50px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
-      h1 {
-        padding: 20px 0;
+      .images, p {
+        margin-bottom: 10px;
+      }
+
+      .images {
+        display: flex;
+
+        img {
+          width: 30px;
+          margin: 5px;
+          position: relative;
+          border-radius: 50%;
+
+          &:nth-child(1) {
+            animation: go-up 1s 0s infinite alternate;
+          }
+
+          &:nth-child(2) {
+            animation: go-up 1s 0.5s infinite alternate;
+          }
+
+          &:nth-child(3) {
+            animation: go-up 1s 1s infinite alternate;
+          }
+
+          &:nth-child(4) {
+            animation: go-up 1s 1.5s infinite alternate;
+          }
+        }
+
+        @keyframes go-up {
+          0% {
+            transform: translateY(0px);
+          }
+
+          50% {
+            transform: translateY(-10px);
+            box-shadow: 0px 37px 20px -15px  #aaa;
+          }
+
+          100% {
+            transform: translateY(0px);
+          }
+        }
+      }
+
+      p {
         text-align: center;
+        line-height: 1rem;
       }
 
       .router-link {
@@ -412,8 +480,8 @@ export default {
         border: 1px solid #aaa;
         box-shadow: 0 2px 5px #aaa;
         border-radius: 5px;
-        padding: 10px;
-        font-size: 1.5rem;
+        padding: 5px 10px;
+        margin-top: 10px;
         color: #777;
       }
     }
@@ -421,6 +489,18 @@ export default {
 
   @include for-desktop {
     .pokemon-info {
+      .empty {
+        .images, p {
+          margin-bottom: 15px;
+        }
+
+        .images {
+          img {
+            width: 50px;
+          }
+        }
+      }
+
       .info {
         max-width: 100vmin;
 
@@ -497,7 +577,12 @@ export default {
             }
 
             .entry-nav {
-              margin-top: 20px;
+              justify-content: flex-start;
+              margin-top: 10px;
+
+              button {
+                font-size: 1.2rem;
+              }
             }
           }
         }

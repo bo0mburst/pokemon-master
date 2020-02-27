@@ -17,7 +17,9 @@
         </p>
 
         <p>
-          {{ item.name }}
+          <span>
+            {{ item.name }}
+          </span>
         </p>
       </li>
     </ul>

@@ -50,7 +50,7 @@ export default new Vuex.Store({
           pokemon.id = id
           pokemon.name = name
           pokemon.jname = names.filter(i => i.language.name === 'ja')[0] || pokemon.name
-          pokemon.genera = genera.filter(i => i.language.name === 'en')
+          pokemon.genera = genera.filter(i => i.language.name === 'en')[0] || ''
           pokemon.description = flavor_text_entries
             .filter(i => i.language.name === 'en')
             .map(i => i.flavor_text.replace(/[^\x20-\x7E]/g, ' '))

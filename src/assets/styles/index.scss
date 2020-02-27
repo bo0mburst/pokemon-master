@@ -27,7 +27,7 @@ a, button {
   }
 }
 
-a, p, h1, h2, h3 {
+a, p > span, h1, h2, h3 {
   text-transform: capitalize;
 }
 

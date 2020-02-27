@@ -30,7 +30,7 @@
             <li>
               <router-link
                 to="/"
-                class="nav-link"
+                class="router-link "
               >
                 Home
               </router-link>
@@ -39,7 +39,7 @@
             <li>
               <router-link
                 to="/pokemon-list"
-                class="nav-link"
+                class="router-link "
               >
                 List
               </router-link>
@@ -48,7 +48,7 @@
             <li>
               <router-link
                 to="/pokemon-team"
-                class="nav-link"
+                class="router-link "
               >
                 Team
               </router-link>
@@ -155,7 +155,7 @@ export default {
           }
         }
 
-        .nav-link {
+        .router-link {
           display: inline-block;
           border: none;
           background-color: #f85353;
@@ -199,7 +199,7 @@ export default {
         max-width: 500px;
 
         .control-wrapper {
-          .nav-link {
+          .router-link  {
             width: 100px;
           }
         }

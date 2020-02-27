@@ -24,7 +24,7 @@
     <div class="loading-wrapper" v-show="loading">
       <loading-indicator></loading-indicator>
     </div>
-    <div class="loading-wrapper" v-show="!loading">
+    <div class="loading-wrapper" v-show="!loading && pokeList">
       <img src="@/assets/img/ic_down.svg">
       <p>Load more</p>
     </div>
@@ -114,7 +114,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 10px 0;
 
     p {
       color: #fff;
@@ -172,6 +172,8 @@ export default {
     }
 
     .loading-wrapper {
+      margin: 50px 0;
+
       img {
         width: 50px;
       }

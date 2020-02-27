@@ -61,13 +61,13 @@
           </h4>
 
           <p>
-            {{ info.description[activeEntry] }}
+            {{ info.description[activeEntry - 1] }}
           </p>
 
           <div class="entry-nav">
             <button
               @click="changeActiveEntry(-1)"
-              :disabled="activeEntry === 0"
+              :disabled="activeEntry === 1"
             >
               prev
             </button>
@@ -78,7 +78,7 @@
 
             <button
               @click="changeActiveEntry(1)"
-              :disabled="activeEntry === info.description.length - 1"
+              :disabled="activeEntry === info.description.length"
             >
               next
             </button>
@@ -203,7 +203,12 @@
 
     <div class="empty" v-else>
       <h1>Oops looks like this pokemon have not yet been seen!</h1>
-      <button>View List</button>
+      <router-link
+        to="/pokemon-list"
+        class="router-link "
+      >
+        View List
+      </router-link>
     </div>
   </div>
 </template>
@@ -217,7 +222,7 @@ export default {
     return {
       activeData: 0,
       activeDetail: 0,
-      activeEntry: 0,
+      activeEntry: 1,
       imgLoading: false
     }
   },
@@ -232,7 +237,7 @@ export default {
     },
 
     changeActiveEntry (val) {
-      this.activeEntry = Math.min(this.info.description.length - 1, Math.max(0, this.activeEntry + val))
+      this.activeEntry = Math.min(this.info.description.length, Math.max(1, this.activeEntry + val))
     },
 
     error (e) {
@@ -399,7 +404,8 @@ export default {
         text-align: center;
       }
 
-      button {
+      .router-link {
+        text-decoration: none;
         background-color: #fff;
         border: 1px solid #aaa;
         box-shadow: 0 2px 5px #aaa;

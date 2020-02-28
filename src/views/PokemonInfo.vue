@@ -58,6 +58,12 @@
         >
           <h4>
             Dex Entry:
+
+            <img
+              class="icon"
+              src="@/assets/img/ic_sound.svg"
+              @click="readDexEntry(info.description[activeEntry - 1])"
+            >
           </h4>
 
           <p>
@@ -247,16 +253,44 @@ export default {
     }
   },
 
+  created () {
+    if (!this.utter) {
+      const voices = window.speechSynthesis.getVoices()
+      const englishVoice = voices.filter(i => i.lang === 'en-US')[0] || voices[0]
+      this.utter = new SpeechSynthesisUtterance()
+      this.utter.rate = 1
+      this.utter.pitch = 1
+      this.utter.voice = englishVoice
+    }
+  },
+
+  deactivated () {
+    window.speechSynthesis.cancel()
+  },
+
+  destroyed () {
+    window.speechSynthesis.cancel()
+  },
+
   methods: {
+    readDexEntry (text) {
+      window.speechSynthesis.cancel()
+      this.utter.text = text
+      setTimeout(window.speechSynthesis.speak(this.utter), 2000)
+    },
+
     changeActiveData (index) {
+      window.speechSynthesis.cancel()
       this.activeData = index
     },
 
     changeActiveDetail (index) {
+      window.speechSynthesis.cancel()
       this.activeDetail = index
     },
 
     changeActiveEntry (val) {
+      window.speechSynthesis.cancel()
       this.activeEntry = Math.min(this.info.description.length, Math.max(1, this.activeEntry + val))
     },
 
@@ -270,6 +304,7 @@ export default {
       this.activeData = 0
       this.activeDetail = 0
       this.activeEntry = 1
+      window.speechSynthesis.cancel()
     }
   },
 
@@ -364,9 +399,22 @@ export default {
         .detail {
           padding: 20px 0;
           border-top: 1px solid #ccc;
+          user-select: text;
 
           h4 {
             margin-bottom: 10px;
+          }
+
+          img.icon {
+            width: 0.85rem;
+            margin: 0 5px;
+            display: inline-block;
+            cursor: pointer;
+            transition: 0.3s;
+
+            &:hover {
+              transform: scale(1.2);
+            }
           }
 
           table {

@@ -6,7 +6,7 @@
           <div class="control search">
             <input
               type="text"
-              placeholder="..."
+              placeholder="name or number"
               spellcheck="false"
               v-model="searchKey"
               @keyup.enter="searchPokemon"
@@ -72,8 +72,8 @@ export default {
     async searchPokemon () {
       if (!this.searchKey) return
       if (this.$route.name !== 'Pokemon Info') this.$router.push({ name: 'Pokemon Info' })
-
-      await this.$store.dispatch('getPokemon', this.searchKey)
+      const key = isNaN(this.searchKey) ? this.searchKey : Number(this.searchKey)
+      await this.$store.dispatch('getPokemon', key)
     }
   }
 }
@@ -149,6 +149,7 @@ export default {
             flex: 1 1 auto;
             padding: 0 10px;
             text-transform: uppercase;
+            text-align: center;
           }
 
           .icon {

@@ -1,13 +1,15 @@
 <template>
-  <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  <div>
+    <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
   .lds-ellipsis {
     display: inline-block;
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
   }
 
   .lds-ellipsis div {

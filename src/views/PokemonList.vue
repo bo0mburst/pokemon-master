@@ -23,9 +23,11 @@
         </p>
       </li>
     </ul>
+
     <div class="loading-wrapper" v-show="loading">
       <loading-indicator></loading-indicator>
     </div>
+
     <div class="loading-wrapper" v-show="!loading && pokeList">
       <img src="@/assets/img/ic_down.svg">
       <p>Load more</p>

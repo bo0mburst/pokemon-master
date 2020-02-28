@@ -10,11 +10,13 @@ html, body {
   width: 100%;
   font-family: 'Montserrat', sans-serif;
   user-select: none;
-  font-size: .85rem;
   color: #777;
+  font-size: .85rem;
+  line-height: 1.5rem;
 
   @include for-desktop {
     font-size: 1rem;
+    line-height: 1.9rem;
   }
 }
 
@@ -29,10 +31,6 @@ a, button {
 
 a, p > span, h1, h2, h3 {
   text-transform: capitalize;
-}
-
-p {
-  line-height: 1.8rem;
 }
 
 ul {
@@ -109,95 +107,4 @@ ul {
 
 .water {
   color: $water;
-}
-
-
-.bg-bug {
-  background-color: $bug;
-  background-image: linear-gradient(to bottom right, darken($bug, 35%), $bug, #eee, $bug, darken($bug, 30%));
-}
-
-.bg-dark {
-  background-color: $dark;
-  background-image: linear-gradient(to bottom right, darken($dark, 35%), $dark, #eee, $dark, darken($dark, 30%));
-}
-
-.bg-dragon {
-  background-color: $dragon;
-  background-image: linear-gradient(to bottom right, darken($dragon, 35%), $dragon, #eee, $dragon, darken($dragon, 30%));
-}
-
-.bg-electric {
-  background-color: $electric;
-  background-image: linear-gradient(to bottom right, darken($electric, 35%), $electric, #eee, $electric, darken($electric, 30%));
-}
-
-.bg-fairy {
-  background-color: $fairy;
-  background-image: linear-gradient(to bottom right, darken($fairy, 35%), $fairy, #eee, $fairy, darken($fairy, 30%));
-}
-
-.bg-fighting {
-  background-color: $fighting;
-  background-image: linear-gradient(to bottom right, darken($fighting, 35%), $fighting, #eee, $fighting, darken($fighting, 30%));
-}
-
-.bg-fire {
-  background-color: $fire;
-  background-image: linear-gradient(to bottom right, darken($fire, 35%), $fire, #eee, $fire, darken($fire, 30%));
-}
-
-.bg-flying {
-  background-color: $flying;
-  background-image: linear-gradient(to bottom right, darken($flying, 35%), $flying, #eee, $flying, darken($flying, 30%));
-}
-
-.bg-ghost {
-  background-color: $ghost;
-  background-image: linear-gradient(to bottom right, darken($ghost, 35%), $ghost, #eee, $ghost, darken($ghost, 30%));
-}
-
-.bg-grass {
-  background-color: $grass;
-  background-image: linear-gradient(to bottom right, darken($grass, 35%), $grass, #eee, $grass, darken($grass, 30%));
-}
-
-.bg-ground {
-  background-color: $ground;
-  background-image: linear-gradient(to bottom right, darken($ground, 35%), $ground, #eee, $ground, darken($ground, 30%));
-}
-
-.bg-ice {
-  background-color: $ice;
-  background-image: linear-gradient(to bottom right, darken($ice, 35%), $ice, #eee, $ice, darken($ice, 30%));
-}
-
-.bg-normal {
-  background-color: $normal;
-  background-image: linear-gradient(to bottom right, darken($normal, 35%), $normal, #eee, $normal, darken($normal, 30%));
-}
-
-.bg-poison {
-  background-color: $poison;
-  background-image: linear-gradient(to bottom right, darken($poison, 35%), $poison, #eee, $poison, darken($poison, 30%));
-}
-
-.bg-psychic {
-  background-color: $psychic;
-  background-image: linear-gradient(to bottom right, darken($psychic, 35%), $psychic, #eee, $psychic, darken($psychic, 30%));
-}
-
-.bg-rock {
-  background-color: $rock;
-  background-image: linear-gradient(to bottom right, darken($rock, 35%), $rock, #eee, $rock, darken($rock, 30%));
-}
-
-.bg-steel {
-  background-color: $steel;
-  background-image: linear-gradient(to bottom right, darken($steel, 35%), $steel, #eee, $steel, darken($steel, 30%));
-}
-
-.bg-water {
-  background-color: $water;
-  background-image: linear-gradient(to bottom right, darken($water, 35%), $water, #eee, $water, darken($water, 30%));
 }

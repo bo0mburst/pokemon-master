@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
-  color: #777;
 }
 
 html, body {
@@ -12,6 +11,7 @@ html, body {
   font-family: 'Montserrat', sans-serif;
   user-select: none;
   font-size: .85rem;
+  color: #777;
 
   @include for-desktop {
     font-size: 1rem;

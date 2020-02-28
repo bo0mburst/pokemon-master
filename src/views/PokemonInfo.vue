@@ -20,19 +20,16 @@
         <li
           v-for="(data, index) in info.data"
           :key="index"
+          :class="{'active' : index === activeData}"
+          @click="changeActiveData(index)"
         >
-          <a
-            :class="{'active' : index === activeData}"
-            @click="changeActiveData(index)"
-          >
-            <span v-if="data.name === info.name">
-              Original
-            </span>
+          <span v-if="data.name === info.name">
+            Original
+          </span>
 
-            <span v-else>
-              {{ data.name.replace(`${info.name}-`, '') }}
-            </span>
-          </a>
+          <span v-else>
+            {{ data.name.replace(`${info.name}-`, '') }}
+          </span>
         </li>
       </ul>
 
@@ -206,13 +203,10 @@
         <li
           v-for="(item, index) in ['dex entry',  'about', 'stats']"
           :key="index"
+          :class="{ 'active' : index === activeDetail }"
+          @click="changeActiveDetail(index)"
         >
-          <a
-            :class="{ 'active' : index === activeDetail }"
-            @click="changeActiveDetail(index)"
-          >
-            {{ item }}
-          </a>
+          {{ item }}
         </li>
       </ul>
     </div>
@@ -354,18 +348,19 @@ export default {
         margin-top: 10px;
 
         li {
+          border-radius: 5px;
+          margin-bottom: 5px;
+          padding: 2px 5px;
+          text-transform: capitalize;
+          cursor: pointer;
+
           &:not(:last-child) {
-            margin-right: 10px;
+            margin-right: 5px;
           }
 
-          a {
-            display: inline-block;
-            padding-left: 5px;
-            border-left: 5px double #aaa;
-
-            &.active {
-              font-weight: 600;
-            }
+          &.active {
+            background-color: #bbb;
+            color: #fff;
           }
         }
 
@@ -567,7 +562,7 @@ export default {
         ul {
           li {
             &:not(:last-child) {
-              margin-right: 20px;
+              margin-right: 10px;
             }
           }
 

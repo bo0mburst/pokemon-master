@@ -45,7 +45,7 @@ export default new Vuex.Store({
 
         if (res.status === 200 && res.data) {
           pokemon = {}
-          const { id, name, names, genera, flavor_text_entries, color, varieties } = res.data
+          const { id, name, names, genera, flavor_text_entries, color, varieties, evolution_chain } = res.data
 
           pokemon.id = id
           pokemon.name = name
@@ -62,6 +62,29 @@ export default new Vuex.Store({
           pokemon.varieties = varieties
           pokemon.data = []
           pokemon.defaultImage = `${imageSource}/${pokemon.id}.png`
+          pokemon.evo = []
+
+          const evo = await api.get(evolution_chain.url)
+          if (evo.status === 200 && evo.data && evo.data.chain) {
+            let chain = evo.data.chain
+
+            do {
+              const evoDetails = chain.evolution_details[0]
+              const evoSpeciesId = chain.species.url
+                .replace('https://pokeapi.co/api/v2/pokemon-species/', '')
+                .replace('/', '')
+
+              pokemon.evo.push({
+                species: chain.species.name,
+                image: `${imageSource}/${evoSpeciesId}.png`,
+                minLevel: !evoDetails ? 1 : evoDetails.min_level,
+                triger: !evoDetails ? null : evoDetails.trigger.name,
+                item: !evoDetails ? null : evoDetails.item
+              })
+
+              chain = chain.evolves_to[0]
+            } while (!!chain && chain.evolves_to)
+          }
 
           for (const variety of pokemon.varieties) {
             const res = await api.get(`/pokemon/${variety.pokemon.name}`)
@@ -70,7 +93,7 @@ export default new Vuex.Store({
 
               const images = []
 
-              if (pokemon.id === 493) { // for arceus
+              if (pokemon.id === 493 || pokemon.id === 773) { // for arceus and silvally
                 images.push(`${imageSource}/${pokemon.id}.png`)
               } else {
                 for (const form of forms) {

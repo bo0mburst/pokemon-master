@@ -82,7 +82,6 @@ export default {
 .pokemon-list {
   height: 100%;
   padding: 80px 0;
-  background-image: linear-gradient(to bottom right, #6d459b, #2aace0, #55a878);
   overflow-y: auto;
 
   ul {

@@ -8,7 +8,7 @@
     </div>
 
     <p>
-      Oops looks like this pokemon have not yet been seen!
+      Oops looks like this pokemon have not yet been discover!
     </p>
 
     <router-link
@@ -70,6 +70,7 @@
   p {
     text-align: center;
     line-height: 1rem;
+    color: #fff;
   }
 
   .router-link {

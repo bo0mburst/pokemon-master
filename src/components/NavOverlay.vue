@@ -74,6 +74,7 @@ export default {
       if (this.$route.name !== 'Pokemon Info') this.$router.push({ name: 'Pokemon Info' })
       const key = isNaN(this.searchKey) ? this.searchKey : Number(this.searchKey)
       await this.$store.dispatch('getPokemon', key)
+      this.searchKey = ''
     }
   }
 }
@@ -138,6 +139,7 @@ export default {
           background-color: #fff;
           overflow: hidden;
           padding: 1px 3px;
+          border: 3px solid #333;
 
           input, button {
             border: 0;

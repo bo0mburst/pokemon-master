@@ -32,6 +32,7 @@ export default {
 
 main {
   height: 100vh;
+  background-image: linear-gradient(to bottom right, #6d459b, #2aace0, #55a878);
 }
 
 </style>

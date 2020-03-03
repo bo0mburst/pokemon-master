@@ -62,29 +62,6 @@ export default new Vuex.Store({
           pokemon.varieties = varieties
           pokemon.data = []
           pokemon.defaultImage = `${imageSource}/${pokemon.id}.png`
-          pokemon.evo = []
-
-          const evo = await api.get(evolution_chain.url)
-          if (evo.status === 200 && evo.data && evo.data.chain) {
-            let chain = evo.data.chain
-
-            do {
-              const evoDetails = chain.evolution_details[0]
-              const evoSpeciesId = chain.species.url
-                .replace('https://pokeapi.co/api/v2/pokemon-species/', '')
-                .replace('/', '')
-
-              pokemon.evo.push({
-                species: chain.species.name,
-                image: `${imageSource}/${evoSpeciesId}.png`,
-                minLevel: !evoDetails ? 1 : evoDetails.min_level,
-                triger: !evoDetails ? null : evoDetails.trigger.name,
-                item: !evoDetails ? null : evoDetails.item
-              })
-
-              chain = chain.evolves_to[0]
-            } while (!!chain && chain.evolves_to)
-          }
 
           for (const variety of pokemon.varieties) {
             const res = await api.get(`/pokemon/${variety.pokemon.name}`)
@@ -96,10 +73,10 @@ export default new Vuex.Store({
               if (pokemon.id === 493 || pokemon.id === 773) { // for arceus and silvally
                 images.push(`${imageSource}/${pokemon.id}.png`)
               } else {
-                for (const form of forms) {
-                  let image = pokemon.id + (form.name.replace(pokemon.name, ''))
-                  image = `${imageSource}/${image}.png`
-                  images.push(image)
+                for (const form of forms.reverse()) {
+                  const formName = form.name.replace(pokemon.name, '')
+                  const image = `${imageSource}/${pokemon.id}${formName}.png`
+                  images.push({ formName, image })
                 }
               }
 
@@ -109,6 +86,14 @@ export default new Vuex.Store({
               abilities = abilities.reverse().map(i => i.ability.name).join(', ')
               pokemon.data.push({ name, height, weight, types, abilities, stats, images })
             }
+          }
+
+          // evolution
+          pokemon.evo = []
+
+          const evo = await api.get(evolution_chain.url)
+          if (evo.status === 200 && evo.data && evo.data.chain) {
+            pokemon.evo = evo.data.chain
           }
         }
       } catch (e) {

@@ -12,71 +12,70 @@
           />
         </div>
 
-        <h4>{{ evo.species.name }}</h4>
-
-          <!-- <p
-            v-for="(detail, index) in evo.evolution_details"
-            :key="index"
-          >
-            <span v-if="detail.gender">
-              {{ gender[detail.gender - 1] }}
-            </span>
-
-            <span v-if="detail.held_item">
-              {{ detail.held_item.name }}
-            </span>
-
-            <span v-if="detail.item">
-              {{ detail.item.name }}
-            </span>
-
-            <span v-if="detail.known_move">
-              {{ detail.known_move }}
-            </span>
-
-            <span v-if="detail.known_move_type">
-              {{ detail.known_move_type }}
-            </span>
-            <span v-if="detail.location">
-                {{ detail.location.name }}
-            </span>
-            <span v-if="detail.min_affection">
-              {{ detail.min_affection }}
-            </span>
-            <span v-if="detail.min_beauty">
-              {{ detail.min_beauty }}
-            </span>
-            <span v-if="detail.min_happiness">
-              {{ detail.min_happiness }}
-            </span>
-            <span v-if="detail.min_level">
-              {{ detail.min_level }}
-            </span>
-            <span v-if="detail.needs_overworld_rain">
-              {{ detail.needs_overworld_rain }}
-            </span>
-            <span v-if="detail.party_species">
-              {{ detail.party_species }}
-            </span>
-            <span v-if="detail.party_type">
-              {{ detail.party_type }}
-            </span>
-            <span v-if="detail.relative_physical_stats">
-              {{ detail.relative_physical_stats }}
-            </span>
-            <span v-if="detail.time_of_day">
-              {{ detail.time_of_day }}
-            </span>
-            <span v-if="detail.trade_species">
-              {{ detail.trade_species }}
-            </span>
-            <span v-if="detail.trigger">
-              {{ detail.trigger.name }}
-            </span>
-            <span v-if="detail.turn_upside_down">
-              {{ detail.turn_upside_down }}
-            </span>
-          </p> -->
+        <div>
+          <h4>{{ evo.species.name }}</h4>
+          <ul>
+            <li
+              v-for="(detail, index) in evo.evolution_details"
+              :key="index"
+            >
+              <span v-if="detail.trigger">
+                {{ detail.trigger.name }}
+              </span>
+              <span v-if="detail.trade_species">
+                trade with {{ detail.trade_species }}
+              </span>
+              <span v-if="detail.gender">
+                {{ `a ${gender[detail.gender - 1]} ${evo.species.name}` }}
+              </span>
+              <span v-if="detail.held_item">
+                holding {{ detail.held_item.name }}
+              </span>
+              <span v-if="detail.item">
+                {{ detail.item.name }}
+              </span>
+              <span v-if="detail.known_move">
+                knowing {{ detail.known_move.name }}
+              </span>
+              <span v-if="detail.known_move_type">
+                knowing {{ detail.known_move_type.name }} type move
+              </span>
+              <span v-if="detail.location">
+                on {{ detail.location.name }}
+              </span>
+              <span v-if="detail.min_affection">
+                with atleast {{ detail.min_affection }} affection
+              </span>
+              <span v-if="detail.min_beauty">
+                with atleast {{ detail.min_beauty }} beauty
+              </span>
+              <span v-if="detail.min_happiness">
+                with atleast {{ detail.min_happiness }} happiness
+              </span>
+              <span v-if="detail.min_level">
+                at level {{ detail.min_level }}
+              </span>
+              <span v-if="detail.needs_overworld_rain">
+                Raining
+              </span>
+              <span v-if="detail.party_species">
+                with {{ detail.party_species }} on party
+              </span>
+              <span v-if="detail.party_type">
+                with {{ detail.party_type }} type on party
+              </span>
+              <span v-if="detail.relative_physical_stats">
+                with {{ detail.relative_physical_stats }} physical stats
+              </span>
+              <span v-if="detail.turn_upside_down">
+                while device is upside-down
+              </span>
+              <span v-if="detail.time_of_day">
+                at {{ detail.time_of_day }}
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <evolution-card
@@ -136,9 +135,19 @@ li {
       z-index: 2;
       margin-right: 10px;
       cursor: pointer;
+      transition: 0.3s;
 
       .lazy-image {
         width: 80px;
+        transition: 0.3s;
+      }
+
+      &:hover {
+        background-color: #a1ddb6;
+
+        .lazy-image {
+          transform: scale(1.3);
+        }
       }
     }
   }
@@ -152,13 +161,31 @@ li {
     &:before {
       content: '';
       display: inline-block;
-      border-bottom: 2px dashed green;
-      border-left: 2px dashed green;
+      border-bottom: 2px dashed #a1ddb6;
+      border-left: 2px dashed #a1ddb6;
       position: absolute;
       width: 25px;
       height: 100%;
       top: -50%;
       left: -30px;
+
+    }
+
+    &:after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      color: #a1ddb6;
+      left: -15px;
+      border: 10px solid;
+      width: 0;
+      height: 0;
+      border-color: transparent transparent transparent #a1ddb6;
+    }
+
+    ul {
+      list-style-type: circle;
+      margin-left: 20px;
     }
   }
 }

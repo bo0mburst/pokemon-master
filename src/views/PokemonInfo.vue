@@ -15,196 +15,193 @@
         <span class="large-name" :style="`color: ${info.color}`">
           {{ info.jname.name || info.name }}
         </span>
-      </header>
 
-      <ul v-if="info.data.length > 1">
-        <li
-          v-for="(pokemon, index) in info.data"
-          :key="index"
-          :class="{'active' : index === activeData}"
-          @click="changeActiveData(index)"
-        >
-          <span v-if="pokemon.name === info.name">
-            Original
-          </span>
-
-          <span v-else>
-            {{ pokemon.name.replace(`${info.name}-`, '') }}
-          </span>
-        </li>
-      </ul>
-
-      <div class="detail-wrapper">
-        <div class="display-image">
-          <div
-            class="image-wrapper"
-            v-for="({formName, image}, index) in info.data[activeData].images"
+        <ul v-if="info.data.length > 1">
+          <li
+            v-for="(pokemon, index) in info.data"
             :key="index"
+            :class="{'active' : index === activeData}"
+            @click="changeActiveData(index)"
           >
-            <lazy-img
-              :src="image"
-              :aspect-ratio="1"
-            />
-
-            <p v-if="info.data[activeData].images.length > 1">
-              <span>
-                {{ formName.replace(/-/g, ' ')  || info.name }}
-              </span>
-            </p>
-          </div>
-        </div>
-
-        <div
-          class="detail"
-        >
-          <h4>
-            Dex Entry:
-
-            <img
-              src="@/assets/img/ic_sound.svg"
-              @click="readDexEntry(info.description[activeEntry - 1])"
-            >
-          </h4>
-
-          <p>
-            {{ info.description[activeEntry - 1] }}
-          </p>
-
-          <div class="entry-nav">
-            <button
-              @click="changeActiveEntry(-1)"
-              :disabled="activeEntry === 1"
-            >
-              《
-            </button>
-
-            <span>
-              {{`${activeEntry} of ${info.description.length}`}}
+            <span v-if="pokemon.name === info.name">
+              Original
             </span>
 
-            <button
-              @click="changeActiveEntry(1)"
-              :disabled="activeEntry === info.description.length"
-            >
-              》
-            </button>
-          </div>
-        </div>
-      </div>
+            <span v-else>
+              {{ pokemon.name.replace(`${info.name}-`, '') }}
+            </span>
+          </li>
+        </ul>
+      </header>
 
-      <div class="detail-wrapper">
+      <div class="display-image">
         <div
-          class="detail"
+          class="image-wrapper"
+          v-for="({formName, image}, index) in info.data[activeData].images"
+          :key="index"
         >
-          <h4>
-            Base Stats
-          </h4>
+          <lazy-img
+            :src="image"
+            :aspect-ratio="1"
+            :key="activeData"
+          />
 
-          <table>
-            <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
-              <td>
-                <p>
-                  <span>
-                    {{ stat.name }}
-                  </span>
-                </p>
-              </td>
-              <td class="stat">
-                {{ base_stat }}
-                <p :style="`width: ${base_stat}px;`"></p>
-              </td>
-            </tr>
-          </table>
-        </div>
-
-        <div
-          class="detail"
-        >
-          <h4>
-            About
-          </h4>
-
-          <table>
-            <tr>
-              <td>
-                Number:
-              </td>
-
-              <td>
-                {{ `#${String(info.id).padStart(3, '0')}` }}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                Type(s):
-              </td>
-
-              <td>
-                <p>
-                  <span
-                    v-for="({type}, index) in info.data[activeData].types"
-                    :key="index"
-                    :class="type.name"
-                  >
-                    {{ type.name }}
-                  </span>
-                </p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                Category:
-              </td>
-
-              <td>
-                <p>
-                  {{ info.genera.genus }}
-                </p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                Abilities:
-              </td>
-
-              <td>
-                <p>
-                  <span>
-                    {{ info.data[activeData].abilities }}
-                  </span>
-                </p>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                Height:
-              </td>
-
-              <td>
-                {{ info.data[activeData].height }}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                Weight:
-              </td>
-
-              <td>
-                {{ info.data[activeData].weight }}
-              </td>
-            </tr>
-          </table>
+          <p v-if="info.data[activeData].images.length > 1">
+            <span>
+              {{ formName.replace(/-/g, ' ')  || info.name }}
+            </span>
+          </p>
         </div>
       </div>
 
       <div
         class="detail"
-        v-if="info.evo.evolves_to.length > 0"
+      >
+        <h4>
+          Dex Entry:
+
+          <img
+            src="@/assets/img/ic_sound.svg"
+            @click="readDexEntry(info.description[activeEntry - 1])"
+          >
+        </h4>
+
+        <p>
+          {{ info.description[activeEntry - 1] }}
+        </p>
+
+        <div class="entry-nav">
+          <button
+            @click="changeActiveEntry(-1)"
+            :disabled="activeEntry === 1"
+          >
+            《
+          </button>
+
+          <span>
+            {{`${activeEntry} of ${info.description.length}`}}
+          </span>
+
+          <button
+            @click="changeActiveEntry(1)"
+            :disabled="activeEntry === info.description.length"
+          >
+            》
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="detail"
+      >
+        <h4>
+          Base Stats
+        </h4>
+
+        <table>
+          <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
+            <td>
+              <p>
+                <span>
+                  {{ stat.name }}
+                </span>
+              </p>
+            </td>
+            <td class="stat">
+              {{ base_stat }}
+              <p :style="`width: ${base_stat}px;`"></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div
+        class="detail"
+      >
+        <h4>
+          About
+        </h4>
+
+        <table>
+          <tr>
+            <td>
+              Number:
+            </td>
+
+            <td>
+              {{ `#${String(info.id).padStart(3, '0')}` }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Type(s):
+            </td>
+
+            <td>
+              <p>
+                <span
+                  v-for="({type}, index) in info.data[activeData].types"
+                  :key="index"
+                  :class="type.name"
+                >
+                  {{ type.name }}
+                </span>
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Category:
+            </td>
+
+            <td>
+              <p>
+                {{ info.genera.genus }}
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Abilities:
+            </td>
+
+            <td>
+              <p>
+                <span>
+                  {{ info.data[activeData].abilities }}
+                </span>
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Height:
+            </td>
+
+            <td>
+              {{ info.data[activeData].height }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Weight:
+            </td>
+
+            <td>
+              {{ info.data[activeData].weight }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div
+        class="detail"
+        v-if="info.evo.evolves_to.length"
       >
         <h4>
           Evolution
@@ -240,7 +237,7 @@ export default {
   created () {
     if (!this.utter) {
       const voices = window.speechSynthesis.getVoices()
-      const englishVoice = voices.filter(i => i.lang === 'en-US')[0] || voices[0]
+      const englishVoice = voices.filter(i => i.lang === 'en-GB')[0] || voices[0]
       this.utter = new SpeechSynthesisUtterance()
       this.utter.rate = 1
       this.utter.pitch = 1
@@ -361,7 +358,6 @@ export default {
       .display-image {
         margin: 30px auto;
         width: 100%;
-        max-width: 300px;
         display: flex;
         justify-content: center;
         position: relative;
@@ -387,6 +383,7 @@ export default {
       .detail {
         margin: 20px 0;
         user-select: text;
+        overflow: hidden;
 
         > * {
           padding: 0 5px;
@@ -475,18 +472,24 @@ export default {
         max-width: 100vmin;
         margin: 0 auto;
         padding: 50px;
+        display: flex;
+        flex-wrap: wrap;
 
         header {
+          width: 100%;
+
           .large-name {
-            font-size: 5rem;
-            top: 100px;
+            font-size: 7rem;
+            top: 150px;
+            right: 50px;
           }
         }
 
         .detail {
+          flex: 1 1 auto;
           border: 1px solid #ccc;
           padding: 0;
-          margin: 10px 0;
+          margin: 10px;
 
           h4 {
             margin: 0;
@@ -497,37 +500,13 @@ export default {
           }
         }
 
-        .detail-wrapper {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
+        .display-image {
+          flex: 1 1 auto;
+          padding-right: 20px;
+          max-width: 500px;
 
-          .display-image {
-            flex: 1 1 auto;
-            padding-right: 50px;
-            min-width: 400px;
-
-            .image-wrapper {
-              flex-basis: 150px;
-            }
-
-            & + .detail {
-              min-height: 250px;
-              display: flex;
-              flex-direction: column;
-
-              p {
-                flex: 1 1 auto;
-              }
-            }
-          }
-
-          .detail {
-            flex: 1 1 300px;
-
-            &:not(:last-child) {
-              margin-right: 10px;
-            }
+          .image-wrapper {
+            flex-basis: 150px;
           }
         }
       }

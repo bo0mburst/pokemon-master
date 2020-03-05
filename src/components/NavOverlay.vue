@@ -29,7 +29,7 @@
           <ul class="control">
             <li>
               <router-link
-                to="/"
+                :to="{ name: 'Home' }"
                 class="router-link "
               >
                 Home
@@ -38,7 +38,7 @@
 
             <li>
               <router-link
-                to="/pokemon-list"
+                :to="{ name: 'pokemon-list' }"
                 class="router-link "
               >
                 List
@@ -47,7 +47,7 @@
 
             <li>
               <router-link
-                to="/pokemon-team"
+                :to="{ name: 'pokemon-team' }"
                 class="router-link "
               >
                 Team
@@ -71,7 +71,7 @@ export default {
   methods: {
     async searchPokemon () {
       if (!this.searchKey) return
-      if (this.$route.name !== 'Pokemon Info') this.$router.push({ name: 'Pokemon Info' })
+      if (this.$route.name !== 'pokemon-info') this.$router.push({ name: 'pokemon-info' })
       const key = isNaN(this.searchKey) ? this.searchKey : Number(this.searchKey)
       await this.$store.dispatch('getPokemon', key)
       this.searchKey = ''

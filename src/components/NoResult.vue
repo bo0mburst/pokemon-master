@@ -12,7 +12,7 @@
     </p>
 
     <router-link
-      to="/pokemon-list"
+      :to="{ name: 'pokemon-list' }"
       class="router-link "
     >
       View List

@@ -12,10 +12,6 @@
       <header>
         <h1>{{ info.name }}</h1>
 
-        <span class="large-name" :style="`color: ${info.color}`">
-          {{ info.jname.name || info.name }}
-        </span>
-
         <ul v-if="info.data.length > 1">
           <li
             v-for="(pokemon, index) in info.data"
@@ -35,6 +31,10 @@
       </header>
 
       <div class="display-image">
+        <span class="large-name" :style="`color: ${info.color}`">
+          {{ info.jname.name || info.name }}
+        </span>
+
         <div
           class="image-wrapper"
           v-for="({formName, image}, index) in info.data[activeData].images"
@@ -89,30 +89,6 @@
             》
           </button>
         </div>
-      </div>
-
-      <div
-        class="detail"
-      >
-        <h4>
-          Base Stats
-        </h4>
-
-        <table>
-          <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
-            <td>
-              <p>
-                <span>
-                  {{ stat.name }}
-                </span>
-              </p>
-            </td>
-            <td class="stat">
-              {{ base_stat }}
-              <p :style="`width: ${base_stat}px;`"></p>
-            </td>
-          </tr>
-        </table>
       </div>
 
       <div
@@ -194,6 +170,30 @@
 
             <td>
               {{ info.data[activeData].weight }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div
+        class="detail"
+      >
+        <h4>
+          Base Stats
+        </h4>
+
+        <table>
+          <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
+            <td>
+              <p>
+                <span>
+                  {{ stat.name }}
+                </span>
+              </p>
+            </td>
+            <td class="stat">
+              {{ base_stat }}
+              <p :style="`width: ${base_stat}px;`"></p>
             </td>
           </tr>
         </table>
@@ -334,13 +334,14 @@ export default {
       header {
         margin-bottom: 10px;
 
-        .large-name {
-          opacity: 0.2;
-          font-size: 2rem;
-          position: absolute;
-          top: 50px;
-          right: 30px;
-          pointer-events: none;
+        h1 {
+          background: #333;
+          box-shadow: -30px 0 0 #333;
+          letter-spacing: 0.5rem;
+          display: inline-block;
+          padding: 5px;
+          border-radius: 5px;
+          color: #fff;
         }
       }
 
@@ -376,9 +377,35 @@ export default {
         position: relative;
         flex-wrap: wrap;
 
+        &:before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-size: 3% 3%;
+          background-color: #fff;
+          background-position: 10px;
+          background-image: linear-gradient(to right, #eee 1px, transparent 1px),
+                            linear-gradient(to bottom, #eee 1px, transparent 1px);
+        }
+
+        .large-name {
+          opacity: 0.2;
+          font-size: 3rem;
+          position: absolute;
+          top: 20px;
+          right: 0;
+          pointer-events: none;
+          z-index: 2;
+        }
+
         .image-wrapper {
+          flex: 1 1 auto;
           flex-basis: 100px;
           margin-bottom: 10px;
+          z-index: 3;
 
           &:only-child {
             flex: 1 1 auto;
@@ -386,9 +413,17 @@ export default {
           }
 
           p {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             line-height: 1rem;
             text-align: center;
+
+            span {
+              background-color: #777;
+              padding: 5px;
+              display: inline-block;
+              color: #fff;
+              border-radius: 5px;
+            }
           }
         }
       }
@@ -404,8 +439,8 @@ export default {
 
         h4 {
           margin-bottom: 10px;
-          background-color: #eee;
-          border-radius: 5px;
+          background-color: #333;
+          color: #fff;
 
           img {
             width: 0.85rem;
@@ -484,25 +519,18 @@ export default {
       .info {
         max-width: 100vmin;
         margin: 0 auto;
-        padding: 50px;
         display: flex;
         flex-wrap: wrap;
 
         header {
           width: 100%;
-
-          .large-name {
-            font-size: 7rem;
-            top: 150px;
-            right: 50px;
-          }
         }
 
         .detail {
           flex: 1 1 auto;
-          border: 1px solid #ccc;
           padding: 0;
           margin: 10px;
+          box-shadow: 0 2px 4px #ccc;
 
           h4 {
             margin: 0;
@@ -515,11 +543,15 @@ export default {
 
         .display-image {
           flex: 1 1 auto;
-          padding-right: 20px;
-          max-width: 500px;
+          margin: 10px;
+
+          .large-name {
+            font-size: 5rem;
+          }
 
           .image-wrapper {
-            flex-basis: 150px;
+            flex-basis: 200px;
+            max-width: 500px;
           }
         }
       }

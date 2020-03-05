@@ -3,7 +3,9 @@
     <nav-overlay></nav-overlay>
     <main>
       <transition name="fade">
-        <router-view/>
+        <keep-alive>
+          <router-view/>
+        </keep-alive>
       </transition>
     </main>
   </div>

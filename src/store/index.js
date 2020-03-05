@@ -58,7 +58,7 @@ export default new Vuex.Store({
               return self.indexOf(value) === index
             })
 
-          pokemon.color = color.name
+          pokemon.color = color.name === 'white' ? '#ddd' : color.name
           pokemon.varieties = varieties
           pokemon.data = []
           pokemon.defaultImage = `${imageSource}/${pokemon.id}.png`
@@ -71,7 +71,7 @@ export default new Vuex.Store({
               const images = []
 
               if (pokemon.id === 493 || pokemon.id === 773) { // for arceus and silvally
-                images.push(`${imageSource}/${pokemon.id}.png`)
+                images.push({ formName: '', image: `${imageSource}/${pokemon.id}.png` })
               } else {
                 for (const form of forms.reverse()) {
                   const formName = form.name.replace(pokemon.name, '')

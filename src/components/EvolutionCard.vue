@@ -12,7 +12,7 @@
           />
         </div>
 
-        <div>
+        <div class="evolution-info">
           <h4>{{ evo.species.name }}</h4>
           <ul>
             <li
@@ -124,22 +124,42 @@ export default {
 
 <style lang="scss" scoped>
 li {
+  margin: 0 auto;
+
   .evolution-detail {
     position: relative;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+
+    .evolution-info {
+      flex: 1 1 100px;
+      background-color: #fff;
+      z-index: 2;
+
+      h4 {
+        margin-left: 20px;
+      }
+
+      ul {
+        list-style-position: inside;
+      }
+    }
 
     .thumbnail {
-      background-color: #ddd;
-      border-radius: 50%;
       z-index: 2;
-      margin-right: 10px;
       cursor: pointer;
+      border-radius: 50%;
       transition: 0.3s;
+      z-index: 3;
 
       .lazy-image {
         width: 80px;
         transition: 0.3s;
+
+        @include for-desktop {
+          width: 150px;
+        }
       }
 
       &:hover {

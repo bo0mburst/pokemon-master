@@ -57,8 +57,7 @@ export default {
     },
 
     async viewPokemon (name) {
-      if (this.$route.name !== 'Pokemon Info') this.$router.push({ name: 'Pokemon Info' })
-      await this.$store.dispatch('getPokemon', name)
+      this.$router.push({ name: 'pokemon-info', params: { pokemon: name } })
     }
   },
 

@@ -213,6 +213,7 @@
 
     <no-result
       class="empty"
+      :pokemon="pokemon"
       v-else
     ></no-result>
   </div>
@@ -225,6 +226,8 @@ import LoadingIndicator from '@/components/LoadingIndicator.vue'
 import EvolutionCard from '@/components/EvolutionCard.vue'
 
 export default {
+  props: ['pokemon'],
+
   data () {
     return {
       activeData: 0,
@@ -286,6 +289,16 @@ export default {
       this.activeDetail = 0
       this.activeEntry = 1
       window.speechSynthesis.cancel()
+    },
+
+    pokemon: {
+      handler: function (val) {
+        if (!val) return
+        const key = isNaN(val) ? val : Number(val)
+        this.$store.dispatch('getPokemon', key)
+      },
+
+      immediate: true
     }
   },
 

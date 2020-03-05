@@ -8,7 +8,7 @@
     </div>
 
     <p>
-      Oops looks like this pokemon have not yet been discover!
+      Oops looks like "{{ pokemon }}" is not yet been discover!
     </p>
 
     <router-link
@@ -19,6 +19,12 @@
     </router-link>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['pokemon']
+}
+</script>
 
 <style lang="scss" scoped>
   .images, p {

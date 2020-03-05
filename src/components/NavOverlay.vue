@@ -71,9 +71,7 @@ export default {
   methods: {
     async searchPokemon () {
       if (!this.searchKey) return
-      if (this.$route.name !== 'pokemon-info') this.$router.push({ name: 'pokemon-info' })
-      const key = isNaN(this.searchKey) ? this.searchKey : Number(this.searchKey)
-      await this.$store.dispatch('getPokemon', key)
+      this.$router.push({ name: 'pokemon-info', params: { pokemon: this.searchKey } })
       this.searchKey = ''
     }
   }

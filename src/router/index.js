@@ -12,14 +12,21 @@ const routes = [
   },
 
   {
-    path: '/pokemon-info',
+    path: '/pokemon-info/:pokemon',
     name: 'pokemon-info',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonInfo.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonInfo.vue'),
+    props: true
   },
 
   {
     path: '/pokemon-list',
     name: 'pokemon-list',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
+  },
+
+  {
+    path: '/pokemon-team',
+    name: 'pokemon-team',
     component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
   }
 ]

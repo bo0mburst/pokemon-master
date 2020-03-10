@@ -22,13 +22,12 @@ const routes = [
     path: '/pokemon-list',
     name: 'pokemon-list',
     component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
-  },
-
-  {
-    path: '/pokemon-team',
-    name: 'pokemon-team',
-    component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
   }
+  // {
+  //   path: '/pokemon-team',
+  //   name: 'pokemon-team',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/PokemonList.vue')
+  // }
 ]
 
 const router = new VueRouter({

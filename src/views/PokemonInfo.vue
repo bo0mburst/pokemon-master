@@ -191,9 +191,23 @@
                 </span>
               </p>
             </td>
-            <td class="stat">
+            <td class="stat" :style="`width: ${info.data[activeData].highestStat}px;`">
               {{ base_stat }}
               <p :style="`width: ${base_stat}px;`"></p>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <p>
+                <span>
+                  Total
+                </span>
+              </p>
+            </td>
+
+            <td class="stat">
+                {{info.data[activeData].totalStats}}
             </td>
           </tr>
         </table>
@@ -327,7 +341,7 @@ export default {
     .info {
       padding: 20px;
       position: relative;
-      background-color:#fff;
+      background-color:#ffffff;
       border-radius: 10px;
       border: 5px solid #ddd;
 
@@ -335,8 +349,8 @@ export default {
         margin-bottom: 10px;
 
         h1 {
-          background: #333;
-          box-shadow: -30px 0 0 #333;
+          background: #4d4c4c;
+          box-shadow: -30px 0 0 #4d4c4c;
           letter-spacing: 0.5rem;
           display: inline-block;
           padding: 5px;
@@ -385,7 +399,6 @@ export default {
           top: 0;
           left: 0;
           background-size: 3% 3%;
-          background-color: #fff;
           background-position: 10px;
           background-image: linear-gradient(to right, #eee 1px, transparent 1px),
                             linear-gradient(to bottom, #eee 1px, transparent 1px);
@@ -399,6 +412,7 @@ export default {
           right: 0;
           pointer-events: none;
           z-index: 2;
+          background-color: #fff;
         }
 
         .image-wrapper {
@@ -439,7 +453,7 @@ export default {
 
         h4 {
           margin-bottom: 10px;
-          background-color: #333;
+          background-color: #4d4c4c;
           color: #fff;
 
           img {
@@ -459,7 +473,7 @@ export default {
           table-layout: fixed;
 
           td:first-child {
-            padding-right: 20px;
+            padding-right: 10px;
           }
 
           .stat {
@@ -473,7 +487,7 @@ export default {
               background-color: #a1ddb6;
               text-align: right;
               padding: 10px;
-              border-radius: 10px;
+              border-radius: 2px;
             }
           }
         }
@@ -539,6 +553,13 @@ export default {
               padding: 10px;
             }
           }
+
+          table {
+            td:first-child {
+              width: 150px;
+            }
+          }
+
         }
 
         .display-image {

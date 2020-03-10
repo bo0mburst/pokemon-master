@@ -83,8 +83,10 @@ export default new Vuex.Store({
               weight = `${(Number(weight) / 10).toFixed(2)} kg`
               height = `${(Number(height) * 10).toFixed(2)} cm`
               stats.reverse()
+              const totalStats = stats.reduce((acc, cur) => acc + cur.base_stat, 0)
+              const highestStat = stats.reduce((acc, cur) => Math.max(acc, cur.base_stat), 0)
               abilities = abilities.reverse().map(i => i.ability.name).join(', ')
-              pokemon.data.push({ name, height, weight, types, abilities, stats, images })
+              pokemon.data.push({ name, height, weight, types, abilities, stats, images, totalStats, highestStat })
             }
           }
 

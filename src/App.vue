@@ -1,13 +1,14 @@
 <template>
   <div id="app">
-    <nav-overlay></nav-overlay>
-    <main>
-      <transition name="fade">
-        <keep-alive>
-          <router-view/>
-        </keep-alive>
-      </transition>
-    </main>
+    <nav-overlay>
+      <main>
+        <transition name="fade">
+          <keep-alive>
+            <router-view/>
+          </keep-alive>
+        </transition>
+      </main>
+    </nav-overlay>
   </div>
 </template>
 

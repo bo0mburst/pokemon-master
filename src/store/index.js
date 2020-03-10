@@ -63,6 +63,8 @@ export default new Vuex.Store({
           pokemon.data = []
           pokemon.defaultImage = `${imageSource}/${pokemon.id}.png`
 
+          if (pokemon.id === 25) pokemon.varieties.splice(6)// pikachu
+
           for (const variety of pokemon.varieties) {
             const res = await api.get(`/pokemon/${variety.pokemon.name}`)
             if (res.status === 200) {

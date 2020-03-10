@@ -18,19 +18,6 @@ $rock: #b8a038;
 $steel: #b8b8d0;
 $water: #6890f0;
 
-// animations
-@keyframes fade-to-right {
-  from {
-    transform: translateX(-50px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
 //transition
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s ease-in-out;

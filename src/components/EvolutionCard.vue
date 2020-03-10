@@ -152,6 +152,7 @@ li {
       border-radius: 50%;
       transition: 0.3s;
       z-index: 3;
+      background-color: #eee;
 
       .lazy-image {
         width: 80px;
@@ -163,6 +164,7 @@ li {
       }
 
       &:hover {
+        z-index: 99;
         background-color: #a1ddb6;
 
         .lazy-image {

@@ -18,7 +18,7 @@
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: #555;
+    background: #ddd;
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
 

@@ -22,39 +22,33 @@
         </div>
       </div>
     </nav>
-    <div class="screen"></div>
+    <div class="screen">
+      <slot></slot>
+    </div>
     <nav>
       <div class="trapezoid">
         <div class="control-wrapper">
           <ul class="control">
             <li>
               <router-link
-                :to="{ name: 'Home' }"
-                class="router-link "
-              >
-                Home
-              </router-link>
-            </li>
-
-            <li>
-              <router-link
                 :to="{ name: 'pokemon-list' }"
                 class="router-link "
               >
-                List
-              </router-link>
-            </li>
-
-            <li>
-              <router-link
-                :to="{ name: 'pokemon-team' }"
-                class="router-link "
-              >
-                Team
+                <img src="@/assets/img/ic_dex.svg">
+                <!-- List -->
               </router-link>
             </li>
           </ul>
         </div>
+      </div>
+      <div class="pagination" v-if="$route.name === 'pokemon-info'">
+        <button @click="prevPokemon()" :disabled="loading || prev < 1">
+          Prev
+        </button>
+
+        <button @click="nextPokemon()" :disabled="loading || next > 807">
+          Next
+        </button>
       </div>
     </nav>
   </div>
@@ -68,7 +62,35 @@ export default {
     }
   },
 
+  computed: {
+    loading () {
+      return this.$store.state.loading
+    },
+
+    info () {
+      return this.$store.state.pokemonInfo
+    },
+
+    next () {
+      return this.info ? this.info.id + 1 : 1
+    },
+
+    prev () {
+      return this.info ? this.info.id - 1 : 1
+    }
+  },
+
   methods: {
+    nextPokemon () {
+      if (this.next > 807) return
+      this.$router.push({ name: 'pokemon-info', params: { pokemon: this.next } })
+    },
+
+    prevPokemon () {
+      if (this.prev < 1) return
+      this.$router.push({ name: 'pokemon-info', params: { pokemon: this.prev } })
+    },
+
     async searchPokemon () {
       if (!this.searchKey) return
       this.$router.push({ name: 'pokemon-info', params: { pokemon: this.searchKey } })
@@ -80,25 +102,44 @@ export default {
 
 <style lang="scss" scoped>
 .nav-overlay {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: transparent;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 999;
-    pointer-events: none;
 
   nav {
     background-color: #f85353;
     box-shadow: 0 1px 2px #333;
     position: relative;
     flex: 1 1 auto;
+    z-index: 999;
+
+    .pagination {
+      position: absolute;
+      width: 100%;
+      top: 100%;
+      z-index: -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        background-color: #333;
+        padding: 2px 20px;
+        border: none;
+        color: #fff;
+        width: 50%;
+        text-align: left;
+        cursor: pointer;
+        line-height: 2.5rem;
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
 
     .trapezoid {
       position: absolute;
@@ -129,6 +170,10 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+
+          li {
+            height: 40px;
+          }
         }
 
         .search {
@@ -161,27 +206,42 @@ export default {
           display: inline-block;
           border: none;
           background-color: #f85353;
-          color: #fff;
-          text-align: center;
-          text-decoration: none;
-          font-weight: 600;
-          padding: 5px 10px;
-          border: none;
-          border-radius: 10px;
-          margin: 0 5px;
-          width: 60px;
-          transition: 0.3s;
+          // text-decoration: none;
+          // border: none;
+          // color: #fff;
+          // text-align: center;
+          // font-weight: 600;
+          // padding: 5px 10px;
+          // border-radius: 10px;
+          // width: 60px;
+          // margin: 0 5px;
+          // transition: 0.3s;
 
-          &:hover, &.router-link-exact-active {
-            background-color: #fff;
-            color: #f85353;
+          // &:hover, &.router-link-exact-active {
+          //   background-color: #fff;
+          //   color: #f85353;
+          // }
+
+          img {
+            width: 40px;
+            transition: 0.3s;
+
+            &:hover {
+              transform: rotateZ(45deg);
+            }
           }
         }
       }
     }
 
-    &:last-child, &:last-child .control {
+    &:last-child, &:last-child .control, .pagination {
       transform: scale(-1);
+    }
+
+    &:last-child {
+      .trapezoid {
+        width: 200px;
+      }
     }
   }
 
@@ -189,22 +249,57 @@ export default {
     width: 100vw;
     height: 98vh;
     position: relative;
-    transition: 0.5s;
-    z-index: -1;
   }
 }
 
 @include for-desktop {
   .nav-overlay {
     nav {
+      .pagination {
+        justify-content: center;
+
+        button {
+          max-width: 250px;
+          position: relative;
+          line-height: 2rem;
+          padding-left: 80px;
+
+          &:last-child {
+            padding-right: 80px;
+          }
+
+          &:before {
+            content: '';
+            display: inline-block;
+            position: absolute;
+            background-color: #333;
+            width: 100px;
+            height: 100%;
+            z-index: -1;
+          }
+
+          &:first-child:before {
+            top: 0;
+            left: -20px;
+            transform: skew(-45deg);
+          }
+
+          &:last-child:before {
+            top: 0;
+            right: -20px;
+            transform: skew(45deg);
+          }
+        }
+      }
+
       .trapezoid {
         max-width: 500px;
 
-        .control-wrapper {
-          .router-link  {
-            width: 100px;
-          }
-        }
+        // .control-wrapper {
+        //   .router-link  {
+        //     width: 100px;
+        //   }
+        // }
       }
     }
   }

@@ -1,29 +1,40 @@
-# pokedex
+# pocketmonster
 
-## Project setup
+A pokedex webapp using vue.js
+
+## Features
+- Search Pokemon species
+    - You can search by pokemon id or by pokemon name
+- Pokemon Information
+    - view pokemon dex entries, forms/variants, statistics, and evolution line.
+
+## How to run
+1. Install dependencies
 ```
 npm install
-```
 
-### Compiles and hot-reloads for development
+```
+2. Run the project on your local machine
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Dependencies
+- vue
+- vue-router
+- vuex
+- axios
+- axios-cache-adapter
 
-### Run your tests
-```
-npm run test
-```
+## Credits
+API
+- [PokeApi](https://pokeapi.co/)
+Image sources
+Images were collected and compressed and now available [here](https://github.com/billysillano/pokemon-assets)
+- [Pokeres](https://pokeres.bastionbot.org/) gen 7
+- [Veekun](http://veekun.com/) gen 1 to 6
+- Pokémon and Pokémon character names are trademarks of Nintendo.
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## License
+MIT

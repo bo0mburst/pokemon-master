@@ -1,6 +1,6 @@
-# pocketmonster
-
+# Project Pokedex
 A pokedex webapp using vue.js
+[pocketmonster.netlify.com](pocketmonster.netlify.com)
 
 ## Features
 - Search Pokemon species

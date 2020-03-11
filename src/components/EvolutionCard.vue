@@ -112,6 +112,7 @@ export default {
 
   methods: {
     view () {
+      if (this.$route.params.pokemon === this.evo.species.name) return
       this.$router.push({ name: 'pokemon-info', params: { pokemon: this.evo.species.name } })
     }
   },

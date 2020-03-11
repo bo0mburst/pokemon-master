@@ -1,6 +1,6 @@
 # Project Pokedex
 A pokedex webapp using vue.js
-[pocketmonster.netlify.com](pocketmonster.netlify.com)
+[pocketmonsters.netlify.com](https://pocketmonsters.netlify.com/)
 
 ![screen](https://user-images.githubusercontent.com/56244118/76382159-c0d85700-6392-11ea-9f5f-14da4abf157f.png)
 

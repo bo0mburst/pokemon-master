@@ -2,6 +2,8 @@
 A pokedex webapp using vue.js
 [pocketmonster.netlify.com](pocketmonster.netlify.com)
 
+![screen](https://user-images.githubusercontent.com/56244118/76382159-c0d85700-6392-11ea-9f5f-14da4abf157f.png)
+
 ## Features
 - Search Pokemon species
     - You can search by pokemon id or by pokemon name

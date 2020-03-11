@@ -112,7 +112,7 @@ export default {
 
   methods: {
     view () {
-      this.$store.dispatch('getPokemon', this.evo.species.name)
+      this.$router.push({ name: 'pokemon-info', params: { pokemon: this.evo.species.name } })
     }
   },
 

@@ -1,11 +1,17 @@
 <template>
   <div class="home">
-    <div>
+    <header>
       <img src="@/assets/img/pokemon_text.png" alt="pokemon">
       <p>
-        Pokedex powered by <a href="https://pokeapi.co/">PokeApi</a>
+        Pokedex powered by <a href="https://pokeapi.co/" target="blank">PokeApi</a>
       </p>
-    </div>
+    </header>
+
+    <footer>
+      <p>
+        Pokémon and Pokémon character names are trademarks of Nintendo.
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -20,24 +26,36 @@ export default {
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  img {
-    width: 80vmin;
-    position: relative;
-    display: block;
+  p {
+    text-align: center;
   }
 
-  p {
-    color: #fff;
-    position: relative;
-    text-align: center;
-    background-color: #ffffff50;
+  header {
+    img {
+      width: 80vmin;
+      position: relative;
+      display: block;
+    }
 
-    a {
+    p {
       color: #fff;
+      background-color: #ffffff50;
 
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  footer {
+    margin-top: 5px;
+    p {
+      color: #333;
+      line-height: 1rem;
     }
   }
 }

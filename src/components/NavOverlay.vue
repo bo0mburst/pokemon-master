@@ -28,17 +28,25 @@
     <nav>
       <div class="trapezoid">
         <div class="control-wrapper">
-          <ul class="control">
-            <li>
-              <router-link
-                :to="{ name: 'pokemon-list' }"
-                class="router-link "
-              >
-                <img src="@/assets/img/ic_dex.svg">
-                <!-- List -->
-              </router-link>
-            </li>
-          </ul>
+          <div class="control">
+            <router-link
+              :to="{ name: 'home' }"
+              class="router-link"
+            >
+              Home
+            </router-link>
+
+            <router-link
+              :to="{ name: 'pokemon-list' }"
+              class="router-link"
+            >
+              <img src="@/assets/img/ic_dex.svg">
+            </router-link>
+
+            <a class="router-link" target="blank" href="https://github.com/billysillano/pokemon-master">
+              About
+            </a>
+          </div>
         </div>
       </div>
       <div class="pagination" v-if="$route.name === 'pokemon-info'">
@@ -170,10 +178,6 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
-
-          li {
-            height: 40px;
-          }
         }
 
         .search {
@@ -206,6 +210,9 @@ export default {
           display: inline-block;
           border: none;
           background-color: #f85353;
+          display: flex;
+          align-items: center;
+          justify-self: center;
           // text-decoration: none;
           // border: none;
           // color: #fff;
@@ -221,14 +228,26 @@ export default {
           //   background-color: #fff;
           //   color: #f85353;
           // }
+        }
 
-          img {
-            width: 40px;
-            transition: 0.3s;
+        img {
+          width: 40px;
+          transition: 0.3s;
 
-            &:hover {
-              transform: rotateZ(45deg);
-            }
+          &:hover {
+            transform: rotateZ(45deg);
+          }
+        }
+
+        a {
+          text-decoration: none;
+          color: #333;
+          font-weight: 600;
+          margin: 0 5px;
+          transition: 0.3s;
+
+          &:hover {
+            color: #fff;
           }
         }
       }
@@ -240,7 +259,7 @@ export default {
 
     &:last-child {
       .trapezoid {
-        width: 200px;
+        width: 250px;
       }
     }
   }
@@ -262,10 +281,10 @@ export default {
           max-width: 250px;
           position: relative;
           line-height: 2rem;
-          padding-left: 80px;
+          padding-left: 50px;
 
           &:last-child {
-            padding-right: 80px;
+            padding-right: 50px;
           }
 
           &:before {
@@ -294,12 +313,12 @@ export default {
 
       .trapezoid {
         max-width: 500px;
+      }
 
-        // .control-wrapper {
-        //   .router-link  {
-        //     width: 100px;
-        //   }
-        // }
+      &:last-child {
+        .trapezoid {
+          width: 300px;
+        }
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header>
-      <img src="@/assets/img/pokemon_text.png" alt="pokemon">
+      <img src="@/assets/img/pokemon_text.svg" alt="pokemon">
       <p>
         Pokedex powered by <a href="https://pokeapi.co/" target="blank">PokeApi</a>
       </p>

@@ -66,28 +66,30 @@
             >
           </h4>
 
-          <p>
-            {{ info.description[activeEntry - 1] }}
-          </p>
+          <div class="content">
+            <p>
+              {{ info.description[activeEntry - 1] }}
+            </p>
 
-          <div class="entry-nav">
-            <button
-              @click="changeActiveEntry(-1)"
-              :disabled="activeEntry === 1"
-            >
-              《
-            </button>
+            <div class="entry-nav">
+              <button
+                @click="changeActiveEntry(-1)"
+                :disabled="activeEntry === 1"
+              >
+                《
+              </button>
 
-            <span>
-              {{`${activeEntry} of ${info.description.length}`}}
-            </span>
+              <span>
+                {{`${activeEntry} of ${info.description.length}`}}
+              </span>
 
-            <button
-              @click="changeActiveEntry(1)"
-              :disabled="activeEntry === info.description.length"
-            >
-              》
-            </button>
+              <button
+                @click="changeActiveEntry(1)"
+                :disabled="activeEntry === info.description.length"
+              >
+                》
+              </button>
+            </div>
           </div>
         </div>
 
@@ -97,82 +99,83 @@
           <h4>
             About
           </h4>
+          <div class="content">
+            <table>
+              <tr>
+                <td>
+                  Number:
+                </td>
 
-          <table>
-            <tr>
-              <td>
-                Number:
-              </td>
+                <td>
+                  {{ `#${String(info.id).padStart(3, '0')}` }}
+                </td>
+              </tr>
 
-              <td>
-                {{ `#${String(info.id).padStart(3, '0')}` }}
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Type(s):
+                </td>
 
-            <tr>
-              <td>
-                Type(s):
-              </td>
+                <td>
+                  <p>
+                    <span
+                      v-for="({type}, index) in info.data[activeData].types"
+                      :key="index"
+                      :class="type.name"
+                    >
+                      {{ type.name }}
+                    </span>
+                  </p>
+                </td>
+              </tr>
 
-              <td>
-                <p>
-                  <span
-                    v-for="({type}, index) in info.data[activeData].types"
-                    :key="index"
-                    :class="type.name"
-                  >
-                    {{ type.name }}
-                  </span>
-                </p>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Category:
+                </td>
 
-            <tr>
-              <td>
-                Category:
-              </td>
+                <td>
+                  <p>
+                    {{ info.genera.genus }}
+                  </p>
+                </td>
+              </tr>
 
-              <td>
-                <p>
-                  {{ info.genera.genus }}
-                </p>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Abilities:
+                </td>
 
-            <tr>
-              <td>
-                Abilities:
-              </td>
+                <td>
+                  <p>
+                    <span>
+                      {{ info.data[activeData].abilities }}
+                    </span>
+                  </p>
+                </td>
+              </tr>
 
-              <td>
-                <p>
-                  <span>
-                    {{ info.data[activeData].abilities }}
-                  </span>
-                </p>
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Height:
+                </td>
 
-            <tr>
-              <td>
-                Height:
-              </td>
+                <td>
+                  {{ info.data[activeData].height }}
+                </td>
+              </tr>
 
-              <td>
-                {{ info.data[activeData].height }}
-              </td>
-            </tr>
+              <tr>
+                <td>
+                  Weight:
+                </td>
 
-            <tr>
-              <td>
-                Weight:
-              </td>
-
-              <td>
-                {{ info.data[activeData].weight }}
-              </td>
-            </tr>
-          </table>
+                <td>
+                  {{ info.data[activeData].weight }}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
 
         <div
@@ -182,35 +185,37 @@
             Base Stats
           </h4>
 
-          <table>
-            <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
-              <td>
-                <p>
-                  <span>
-                    {{ stat.name }}
-                  </span>
-                </p>
-              </td>
-              <td class="stat" :style="`width: ${info.data[activeData].highestStat}px;`">
-                {{ base_stat }}
-                <p :style="`width: ${base_stat}px;`"></p>
-              </td>
-            </tr>
+          <div class="content">
+            <table>
+              <tr v-for="({stat, base_stat}, index) in info.data[activeData].stats" :key="index">
+                <td>
+                  <p>
+                    <span>
+                      {{ stat.name }}
+                    </span>
+                  </p>
+                </td>
+                <td class="stat" :style="`width: ${info.data[activeData].highestStat}px;`">
+                  {{ base_stat }}
+                  <p :style="`width: ${base_stat}px;`"></p>
+                </td>
+              </tr>
 
-            <tr>
-              <td>
-                <p>
-                  <span>
-                    Total
-                  </span>
-                </p>
-              </td>
+              <tr>
+                <td>
+                  <p>
+                    <span>
+                      Total
+                    </span>
+                  </p>
+                </td>
 
-              <td class="stat">
-                  {{info.data[activeData].totalStats}}
-              </td>
-            </tr>
-          </table>
+                <td class="stat">
+                    {{info.data[activeData].totalStats}}
+                </td>
+              </tr>
+            </table>
+          </div>
         </div>
 
         <div
@@ -221,7 +226,9 @@
             Evolution
           </h4>
 
-          <evolution-card :evo="info.evo"></evolution-card>
+          <div class="content">
+            <evolution-card :evo="info.evo"></evolution-card>
+          </div>
         </div>
       </div>
 
@@ -336,26 +343,23 @@ export default {
   .pokemon-info {
     height: 100%;
     overflow-y: auto;
-    padding: 60px 20px;
+    padding: 60px 10px;
 
     .info {
-      padding: 20px;
+      padding: 20px 0;
       position: relative;
-      background-color:#ffffff;
       border-radius: 10px;
-      border: 5px solid #ddd;
 
       header {
-        margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
 
         h1 {
-          background: #4d4c4c;
-          box-shadow: -30px 0 0 #4d4c4c;
-          letter-spacing: 0.5rem;
-          display: inline-block;
-          padding: 5px;
-          border-radius: 5px;
           color: #fff;
+          padding: 10px 0;
+          font-size: 2rem;
+          display: inline-block;
+          margin-right: 20px;
         }
       }
 
@@ -370,61 +374,46 @@ export default {
           margin-bottom: 5px;
           padding: 2px 5px;
           text-transform: capitalize;
+          background-color: #4d4c4c;
+          color: #fff;
           cursor: pointer;
+          opacity: 0.5;
 
           &:not(:last-child) {
             margin-right: 5px;
           }
 
           &.active {
-            background-color: #bbb;
-            color: #fff;
+            opacity: 1;
           }
         }
       }
 
       .display-image {
-        margin: 30px auto;
+        margin: 10px auto;
         width: 100%;
         display: flex;
         justify-content: center;
         position: relative;
         flex-wrap: wrap;
-
-        &:before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
-          background-size: 3% 3%;
-          background-position: 10px;
-          background-image: linear-gradient(to right, #eee 1px, transparent 1px),
-                            linear-gradient(to bottom, #eee 1px, transparent 1px);
-        }
+        border-radius: 10px;
+        padding: 20px;
+        background-image: linear-gradient(to bottom, transparent, #fff);
 
         .large-name {
-          opacity: 0.2;
-          font-size: 3rem;
+          font-size: 2rem;
           position: absolute;
-          top: 20px;
-          right: 0;
+          bottom: 1rem;
+          right: 1rem;
           pointer-events: none;
           z-index: 2;
-          background-color: #fff;
+          opacity: 0.5;
         }
 
         .image-wrapper {
           flex: 1 1 auto;
           flex-basis: 100px;
-          margin-bottom: 10px;
           z-index: 3;
-
-          &:only-child {
-            flex: 1 1 auto;
-            margin-bottom: 0;
-          }
 
           p {
             font-size: 0.7rem;
@@ -432,10 +421,9 @@ export default {
             text-align: center;
 
             span {
-              background-color: #777;
               padding: 5px;
               display: inline-block;
-              color: #fff;
+              color: #333;
               border-radius: 5px;
             }
           }
@@ -443,15 +431,18 @@ export default {
       }
 
       .detail {
-        margin: 20px 0;
+        margin: 10px 0;
+        border-radius: 10px;
         user-select: text;
         overflow: hidden;
+        background-color:#ffffff;
 
-        > * {
-          padding: 0 5px;
+        .content {
+          padding: 10px;
         }
 
         h4 {
+          padding: 5px 10px;
           margin-bottom: 10px;
           background-color: #4d4c4c;
           color: #fff;
@@ -479,12 +470,12 @@ export default {
           .stat {
             display: flex;
             align-items: center;
-            color: #a1ddb6;
+            color: #0d9769;
 
             p {
               display: inline-block;
               margin-left: 10px;
-              background-color: #a1ddb6;
+              background-image: linear-gradient(to right, #0d9769, #a1ddb6);
               text-align: right;
               padding: 10px;
               border-radius: 2px;
@@ -538,21 +529,18 @@ export default {
 
         header {
           width: 100%;
+          margin: 10px;
+
+          h1 {
+            font-size: 2.5rem;
+          }
         }
 
         .detail {
           flex: 1 1 auto;
           padding: 0;
           margin: 10px;
-          box-shadow: 0 2px 4px #ccc;
-
-          h4 {
-            margin: 0;
-
-            & + * {
-              padding: 10px;
-            }
-          }
+          box-shadow: 0 2px 4px #333;
 
           table {
             td:first-child {
@@ -567,7 +555,9 @@ export default {
           margin: 10px;
 
           .large-name {
-            font-size: 5rem;
+            font-size: 3rem;
+            bottom: 2rem;
+            right: 2rem;
           }
 
           .image-wrapper {

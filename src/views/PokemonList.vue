@@ -93,20 +93,24 @@ export default {
       margin: 10px 0;
       display: flex;
       align-items: center;
-      background-color: #fff;
+      background-color: #33333390;
+      color: #fff;
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 5px 20px;
       font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.5s;
 
       .display-image {
-        cursor: pointer;
         min-width: 60px;
         margin-right: 15px;
+        transition: 1s;
       }
 
       p {
         margin-right: 15px;
+        pointer-events: none;
       }
     }
   }
@@ -160,6 +164,15 @@ export default {
         flex-direction: column;
         justify-content: center;
         font-size: 0.9rem;
+
+        &:hover {
+          background-color: #fff;
+          color: #777;
+
+          .display-image {
+            transform: scale(1.2) translateY(-10px);
+          }
+        }
 
         .display-image {
           width: 100%;

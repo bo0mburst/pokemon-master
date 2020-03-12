@@ -33,7 +33,7 @@
               :to="{ name: 'home' }"
               class="router-link"
             >
-              Home
+              HOME
             </router-link>
 
             <router-link
@@ -44,7 +44,7 @@
             </router-link>
 
             <a class="router-link" target="blank" href="https://github.com/billysillano/pokemon-master">
-              About
+              ABOUT
             </a>
           </div>
         </div>
@@ -162,6 +162,7 @@ export default {
       border-style: solid;
       border-width: 50px;
       border-color: #f85353 transparent transparent transparent;
+      pointer-events: none;
 
       .control-wrapper {
         position: absolute;
@@ -178,6 +179,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          pointer-events: all;
         }
 
         .search {

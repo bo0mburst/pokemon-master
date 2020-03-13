@@ -236,7 +236,7 @@
           </h4>
 
           <div class="content">
-            <evolution-card :evo="info.evo"></evolution-card>
+            <evolution-card :evo="info.evo" :container="$el"></evolution-card>
           </div>
         </div>
       </div>

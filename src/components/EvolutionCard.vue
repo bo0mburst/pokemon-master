@@ -83,6 +83,7 @@
         v-for="(nextEvo, index) in evo.evolves_to"
         :key="index"
         :evo="nextEvo"
+        :container="container"
       ></evolution-card>
     </li>
   </ul>
@@ -94,7 +95,7 @@ import EvolutionCard from '@/components/EvolutionCard.vue'
 export default {
   name: 'evolution-card',
 
-  props: ['evo'],
+  props: ['evo', 'container'],
 
   data () {
     return {
@@ -112,6 +113,7 @@ export default {
 
   methods: {
     view () {
+      this.container.scrollTop = 0
       if (this.$route.params.pokemon === this.evo.species.name) return
       this.$router.push({ name: 'pokemon-info', params: { pokemon: this.evo.species.name } })
     }

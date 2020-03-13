@@ -60,10 +60,19 @@
           <h4>
             Dex Entry:
 
+            <template v-if="this.utter">
             <img
               src="@/assets/img/ic_sound.svg"
+              v-show="!speaking"
               @click="readDexEntry(info.description[activeEntry - 1])"
             >
+
+            <img
+              src="@/assets/img/ic_stop.svg"
+              v-show="speaking"
+              @click="stopDexEntry()"
+            >
+            </template>
           </h4>
 
           <div class="content">
@@ -254,11 +263,14 @@ export default {
       activeData: 0,
       activeDetail: 0,
       activeEntry: 1,
-      imgLoading: false
+      imgLoading: false,
+      speaking: false,
+      timeOut: null
     }
   },
 
   created () {
+    if (!window.speechSynthesis) return
     if (!this.utter) {
       const voices = window.speechSynthesis.getVoices()
       const englishVoice = voices.filter(i => i.lang === 'en-GB')[0] || voices[0]
@@ -266,41 +278,50 @@ export default {
       this.utter.rate = 1
       this.utter.pitch = 1
       this.utter.voice = englishVoice
+      this.utter.onstart = function () { this.speaking = true }.bind(this)
+      this.utter.onend = function () { this.speaking = false }.bind(this)
+      this.utter.oncancel = function () { this.speaking = false }.bind(this)
     }
   },
 
   deactivated () {
-    window.speechSynthesis.cancel()
+    this.stopDexEntry()
   },
 
-  destroyed () {
-    window.speechSynthesis.cancel()
+  beforeDestroy () {
+    this.stopDexEntry()
   },
 
   methods: {
     readDexEntry (text) {
-      window.speechSynthesis.cancel()
+      this.stopDexEntry()
       this.utter.text = text
-      setTimeout(window.speechSynthesis.speak(this.utter), 2000)
+      this.timeOut = setTimeout(window.speechSynthesis.speak(this.utter), 2000)
+    },
+
+    stopDexEntry () {
+      if (!window.speechSynthesis) return
+      window.speechSynthesis.cancel()
+      if (this.timeOut) clearTimeout(this.timeOut)
     },
 
     changeActiveData (index) {
-      window.speechSynthesis.cancel()
+      this.stopDexEntry()
       this.activeData = index
     },
 
     changeActiveDetail (index) {
-      window.speechSynthesis.cancel()
+      this.stopDexEntry()
       this.activeDetail = index
     },
 
     changeActiveEntry (val) {
-      window.speechSynthesis.cancel()
+      this.stopDexEntry()
       this.activeEntry = Math.min(this.info.description.length, Math.max(1, this.activeEntry + val))
     },
 
-    error (e) {
-      console.log(e)
+    setSpeaking (val) {
+      this.speaking = val
     }
   },
 
@@ -309,7 +330,7 @@ export default {
       this.activeData = 0
       this.activeDetail = 0
       this.activeEntry = 1
-      window.speechSynthesis.cancel()
+      this.stopDexEntry()
     },
 
     pokemon: {

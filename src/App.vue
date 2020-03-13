@@ -4,7 +4,7 @@
       <main>
         <transition name="fade">
           <keep-alive>
-            <router-view/>
+            <router-view class="view"/>
           </keep-alive>
         </transition>
       </main>
@@ -54,4 +54,25 @@ main {
   }
 }
 
+@include for-desktop {
+  .view {
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-track { // track
+      background : transparent;
+    }
+
+    &::-webkit-scrollbar-thumb { // thumb
+      background : #333;
+      border-radius: 10px;
+    }
+
+    // firefox
+    scrollbar-color: #3333 transparent;
+    scrollbar-width: thin;
+  }
+}
 </style>

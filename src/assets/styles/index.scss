@@ -5,6 +5,10 @@
   outline: none;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body {
   height: 100%;
   width: 100%;
@@ -19,6 +23,7 @@ html, body {
     line-height: 1.9rem;
   }
 }
+
 
 a, button {
   cursor: pointer;

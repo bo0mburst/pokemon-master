@@ -456,15 +456,17 @@ export default {
         border-radius: 10px;
         user-select: text;
         overflow: hidden;
-        background-color:#ffffff;
+        display: flex;
+        flex-direction: column;
 
         .content {
+          background-color:#ffffff;
           padding: 10px;
+          flex: 1 1 auto;
         }
 
         h4 {
           padding: 5px 10px;
-          margin-bottom: 10px;
           background-color: #4d4c4c;
           color: #fff;
 

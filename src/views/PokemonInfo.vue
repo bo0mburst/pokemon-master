@@ -364,10 +364,10 @@ export default {
   .pokemon-info {
     height: 100%;
     overflow-y: auto;
-    padding: 60px 10px;
+    padding: 0 10px;
 
     .info {
-      padding: 20px 0;
+      padding: 60px 0;
       position: relative;
       border-radius: 10px;
 
@@ -435,6 +435,7 @@ export default {
           flex: 1 1 auto;
           flex-basis: 100px;
           z-index: 3;
+          max-width: 200px;
 
           p {
             font-size: 0.7rem;
@@ -542,8 +543,6 @@ export default {
 
   @include for-desktop {
     .pokemon-info {
-      padding: 80px 20px;
-
       .info {
         max-width: 100vmin;
         margin: 0 auto;
@@ -585,7 +584,7 @@ export default {
 
           .image-wrapper {
             flex-basis: 200px;
-            max-width: 500px;
+            max-width: 400px;
           }
         }
       }

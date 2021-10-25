@@ -1,5 +1,5 @@
 <template>
-  <div class="pokemon-list" @scroll="handleScroll($event)">
+  <div class="pokemon-list">
     <ul v-if="pokeList">
       <li
         v-for="(item, index) in pokeList"
@@ -29,8 +29,7 @@
     </div>
 
     <div class="loading-wrapper" v-show="!loading && pokeList">
-      <img src="@/assets/img/ic_down.svg">
-      <p>Load more</p>
+      <button @click="getPokemonList">Load more</button>
     </div>
   </div>
 </template>
@@ -44,14 +43,6 @@ export default {
   },
 
   methods: {
-    handleScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      if (this.loading) return
-
-      if (scrollTop + clientHeight >= scrollHeight) {
-        this.getPokemonList()
-      }
-    },
-
     async getPokemonList () {
       await this.$store.dispatch('getPokemonList')
     },
@@ -122,26 +113,18 @@ export default {
     align-items: center;
     margin: 10px 0;
 
-    p {
-      color: #fff;
-    }
+    button {
+      color: #333;
+      background-color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 1.5rem;
+      box-shadow: 0 2px 4px #333;
+      transition: background .3s;
 
-    img {
-      width: 30px;
-      animation: up-down 1s infinite;
-
-      @keyframes up-down {
-        0% {
-          transform: translateY(0);
-        }
-
-        50% {
-          transform: translateY(10px);
-        }
-
-        100% {
-          transform: translateY(0px);
-        }
+      &:hover {
+        background-color: #33333390;
+        color: #fff;
       }
     }
   }

@@ -205,8 +205,8 @@
                   </p>
                 </td>
                 <td class="stat" :style="`width: ${info.data[activeData].highestStat}px;`">
-                  {{ base_stat }}
                   <p :style="`width: ${base_stat}px;`"></p>
+                  {{ base_stat }}
                 </td>
               </tr>
 
@@ -498,7 +498,7 @@ export default {
 
             p {
               display: inline-block;
-              margin-left: 10px;
+              margin-right: 10px;
               background-image: linear-gradient(to right, #0d9769, #a1ddb6);
               text-align: right;
               padding: 10px;

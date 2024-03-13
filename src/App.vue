@@ -37,6 +37,7 @@ export default {
 
 main {
   height: 100vh;
+  height: 100dvh;
   background-size: 200% 200%;
   background-image: linear-gradient(to bottom right, #333, #6d459b, #2aace0, #55a878, #333);
   animation: move 15s infinite linear forwards;
